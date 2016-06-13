@@ -1,5 +1,9 @@
 angular.module('app')
   .config(($routeProvider) => (
     $routeProvider
-      .otherwise('/')
+      .when('/pairing', {
+        controller: 'PairingCtrl',
+        controllerAs: 'pairing',
+        templateUrl: '/app/pairing.html'
+      })
   ));
