@@ -1,0 +1,30 @@
+{
+  "name": "flavorize",
+  "version": "1.0.0",
+  "description": "Front-end capstone project for Nashville Software School",
+  "main": "index.js",
+  "scripts": {
+    "build": "gulp build",
+    "serve": "gulp watch",
+    "start": "npm run build && http-server dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoryTohill/flavorize.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CoryTohill/flavorize/issues"
+  },
+  "homepage": "https://github.com/CoryTohill/flavorize#readme",
+  "devDependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-connect": "^4.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "http-server": "^0.9.0",
+    "run-sequence": "^1.2.1"
+  }
+}
