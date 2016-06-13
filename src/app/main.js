@@ -1,1 +1,2 @@
-console.log("hello world");
+angular.module('app', ['ngRoute', 'ui.bootstrap'])
+
