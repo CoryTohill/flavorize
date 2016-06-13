@@ -1,5 +1,18 @@
 <h1>Hello World</h1>
-<form ng-submit="pairing.addIngredient(pairing.ingredient)">
+<form ng-submit="pairing.searchIngredients(pairing.ingredient)">
   <input ng-model="pairing.ingredient" type="text">
+  <input type="submit" value="Search Ingredient">
+</form>
+
+<!-- <div ng-repeat="ingredient in pairing.searchedIngredients">
+  <p>{{ingredient.name}}</p>
+ -->
+<!-- </div> -->
+
+<form ng-submit="pairing.addIngredient(pairing.selected)">
+  <!-- <input list="ingredientList" placeholder="Available Ingredients" ng-model="pairing.selected"> -->
+  <select name="Available Ingredients" ng-model="pairing.selected">
+    <option ng-repeat="ingredient in pairing.searchedIngredients" value="{{ingredient.id}}">{{ingredient.name}}</option>
+  </select>
   <input type="submit" value="Add Ingredient">
 </form>
