@@ -20,8 +20,12 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     };
 
     pairing.addIngredient = function (ingredient) {
+      // resets the user text input
       pairing.ingredient = '';
-      ingredient = JSON.parse(ingredient);
+      if (typeof ingredient !== "object") {
+        ingredient = JSON.parse(ingredient);
+      }
+      console.log(ingredient)
       pairing.selectedIngredients.push(ingredient.name);
 
       pairing.ingredientIds.push(ingredient.id);
@@ -30,6 +34,10 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
           return pairing.pairings = data;
         })
     };
+
+    pairing.card = function (info) {
+      console.log(info._links.ingredient);
+    }
 
   })
 
