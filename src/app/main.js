@@ -1,4 +1,6 @@
 angular.module('app', ['ngRoute', 'ui.bootstrap'])
+
+
   .controller('PairingCtrl', function (FoodPairingFactory) {
     const pairing = this;
     pairing.searchedIngredients = [];
@@ -16,30 +18,28 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       FoodPairingFactory.ingredientInfo(ingredient)
         .then((data) => {
           return pairing.searchedIngredients = data;
-        })
+        });
     };
 
     pairing.addIngredient = function (ingredient) {
       // resets the user text input
       pairing.ingredient = '';
+
+      // parses ingredient if what is passed in is not alreay an object
       if (typeof ingredient !== "object") {
         ingredient = JSON.parse(ingredient);
       }
-      console.log(ingredient)
+
       pairing.selectedIngredients.push(ingredient.name);
 
       pairing.ingredientIds.push(ingredient.id);
+
       FoodPairingFactory.suggestPairings(pairing.ingredientIds)
-        .then((data) => {
-          return pairing.pairings = data;
-        })
+        .then((data) => { return pairing.pairings = data; });
     };
 
-    pairing.card = function (info) {
-      console.log(info._links.ingredient);
-    }
-
   })
+
 
   .factory('FoodPairingFactory', ($http) => {
     return {
@@ -52,8 +52,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
             'X-Application-Key': 'f1a7be912dca2656623166a8a1715478'
           }
         };
-
-        return $http(searchRequest).then((response) => data = response.data)
+        return $http(searchRequest).then((response) => data = response.data);
       },
 
       suggestPairings (ingredientIds) {
@@ -65,8 +64,8 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
             'X-Application-ID': '83dc83f5',
             'X-Application-Key': 'f1a7be912dca2656623166a8a1715478'
           }
-        }
+        };
         return $http(pairingRequest).then((response) => data = response.data);
       }
-    }
+    };
   })
