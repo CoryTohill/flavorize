@@ -4,7 +4,12 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     pairing.searchedIngredients = [];
     pairing.ingredientIds = [];
     pairing.selectedIngredients = [];
+    pairing.showSelectIngredient = false;
 
+    // changes value for ng-show to the opposite of what it is currently set as
+    pairing.toggleSelectElement = function () {
+      pairing.showSelectIngredient = !pairing.showSelectIngredient;
+    };
 
     // calls API search for available foods based on user text
     pairing.searchIngredients = function (ingredient) {

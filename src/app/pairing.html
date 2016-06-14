@@ -1,16 +1,16 @@
 <h1>Hello World</h1>
 <form ng-submit="pairing.searchIngredients(pairing.ingredient)">
   <input ng-model="pairing.ingredient" type="text">
-  <input type="submit" value="Search Ingredients">
+  <input type="submit" value="Search Ingredients" ng-click="pairing.toggleSelectElement()">
 </form>
 
 
-<form ng-submit="pairing.addIngredient(pairing.selected)">
+<form ng-show="pairing.showSelectIngredient" ng-submit="pairing.addIngredient(pairing.selected)">
   <select name="Available Ingredients" ng-model="pairing.selected">
     <option selected disabled value="">Select an Ingredient to Add</option>
     <option ng-repeat="ingredient in pairing.searchedIngredients" value="{{ingredient}}">{{ingredient.name}}</option>
   </select>
-  <input type="submit" value="Add Ingredient">
+  <input type="submit" value="Add Ingredient" ng-click="pairing.toggleSelectElement()">
 </form>
 
 <div class="container-fluid">
