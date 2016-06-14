@@ -20,6 +20,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     };
 
     pairing.addIngredient = function (ingredient) {
+      pairing.ingredient = '';
       ingredient = JSON.parse(ingredient);
       pairing.selectedIngredients.push(ingredient.name);
 
