@@ -3,10 +3,23 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
   .controller('PairingCtrl', function (FoodPairingFactory) {
     const pairing = this;
+
+    pairing.userIngredients = [];
     pairing.searchedIngredients = [];
-    pairing.ingredientIds = [];
-    pairing.selectedIngredients = [];
     pairing.showSelectIngredient = false;
+
+    function getPairingSuggestions () {
+      // clears the suggestions displayed
+      pairing.pairings = [];
+      // gets all food ids from user ingredients object
+      const userIngredientsIds = pairing.userIngredients.map((obj) => obj.id);
+
+      // if statement prevents factory from firing if user has no ingredients selected
+      if (0 < userIngredientsIds.length) {
+        FoodPairingFactory.suggestPairings(userIngredientsIds)
+          .then((data) => { return pairing.pairings = data; });
+      }
+    };
 
     // changes value for ng-show to the opposite of what it is currently set as
     pairing.toggleSelectElement = function () {
@@ -15,7 +28,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
     // calls API search for available foods based on user text
     pairing.searchIngredients = function (ingredient) {
-      FoodPairingFactory.ingredientInfo(ingredient)
+      FoodPairingFactory.searchIngredients(ingredient)
         .then((data) => {
           return pairing.searchedIngredients = data;
         });
@@ -30,20 +43,24 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
         ingredient = JSON.parse(ingredient);
       }
 
-      pairing.selectedIngredients.push(ingredient.name);
+      pairing.userIngredients.push(ingredient);
 
-      pairing.ingredientIds.push(ingredient.id);
-
-      FoodPairingFactory.suggestPairings(pairing.ingredientIds)
-        .then((data) => { return pairing.pairings = data; });
+      getPairingSuggestions();
     };
 
+    // removes selected ingredient from user array and gets new suggestions
+    pairing.removeIngredient = function (ingredient) {
+      const index = pairing.userIngredients.indexOf(ingredient);
+      pairing.userIngredients.splice(index, 1);
+
+      getPairingSuggestions();
+    };
   })
 
 
   .factory('FoodPairingFactory', ($http) => {
     return {
-      ingredientInfo (ingredient) {
+      searchIngredients (ingredient) {
         const searchRequest = {
           method: 'GET',
           url: `https://api.foodpairing.com/ingredients?q=${ingredient}?order=matches[all][rel]`,
