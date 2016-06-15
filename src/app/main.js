@@ -2,12 +2,16 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
 //****************** Pairing Page***********************
 
-  .controller('PairingCtrl', function (FoodPairingFactory) {
-    const pairing = this;
+  .controller('PairingCtrl', function (FoodPairingFactory, UserRecipe) {
 
-    pairing.userIngredients = [];
+    const pairing = this;
+    pairing.userIngredients = UserRecipe.getRecipe();
     pairing.searchedIngredients = [];
     pairing.showSelectIngredient = false;
+
+    // pairing.setUserRecipe = function () {
+    //   UserRecipe.setRecipe(pairing.userIngredients);
+    // }
 
     function getPairingSuggestions () {
       // clears the suggestions displayed
@@ -88,13 +92,33 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     };
   })
 
+//**************************** User Recipe Object Factory *****************************
+
+  .factory('UserRecipe', () => {
+    // will eventually be a call to firebase to get recipe info if editing a recipe
+    const userRecipe = [];
+
+    console.log("userRecipe",userRecipe)
+
+    return {
+      getRecipe () {
+        console.log("factory get userRecipe", userRecipe);
+        return userRecipe;
+      },
+      setRecipe (recipe) {
+        userRecipe = recipe;
+      }
+    }
+  })
+
 
 
 //**************************** Recipe Page *****************************
 
-  .controller('RecipeCtrl', function () {
+  .controller('RecipeCtrl', function (UserRecipe) {
     const recipe = this;
 
-
+    recipe.userIngredients = UserRecipe.getRecipe();
+    console.log("recipe one",recipe.userIngredients);
 
   })
