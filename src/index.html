@@ -6,7 +6,13 @@
   </head>
   <body>
     <div ng-app="app">
-      <div ng-view></div>
+      <div ng-controller="MainNavCtrl as mainNav">
+        <!-- site nav bar goes here -->
+        <div ng-controller="RecipeNavCtrl as recipeNav">
+          <!-- recipe nav bar goes here with show/hide -->
+          <div ng-view></div>
+        </div>
+      </div>
     </div>
 
 

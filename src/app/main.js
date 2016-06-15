@@ -122,3 +122,14 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     console.log("recipe one",recipe.userIngredients);
 
   })
+
+
+  .controller('MainNavCtrl', function () {
+    const mainNav = this;
+
+  })
+
+  .controller('RecipeNavCtrl', function () {
+    const recipeNav = this;
+
+  })
