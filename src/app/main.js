@@ -130,7 +130,14 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
   })
 
-  .controller('RecipeNavCtrl', function () {
-    const recipeNav = this;
 
+  .controller('RecipeEditorCtrl', function () {
+    const recipeEditor = this;
+    recipeEditor.page = "Food Pairing";
+
+    recipeEditor.tabs = ["Recipe", "Food Pairing", "Nutrition"];
+    recipeEditor.apple = function (word) {
+      recipeEditor.page = word;
+      console.log(word)
+    }
   })

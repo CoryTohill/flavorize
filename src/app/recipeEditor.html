@@ -1,0 +1,11 @@
+<!-- recipe editor navigation tabs -->
+<a href="#/recipeEditor"
+  ng-click="recipeEditor.apple(tab)"
+  ng-repeat="tab in recipeEditor.tabs"
+  >
+  {{tab}}
+  </a>
+
+<!-- html pages to display base on what recipe editor navigation tab is selected -->
+<div ng-include="'/app/recipe.html'" ng-show="recipeEditor.page === 'Recipe'"></div>
+<div ng-include="'/app/pairing.html'" ng-show="recipeEditor.page === 'Food Pairing'"></div>
