@@ -1,0 +1,36 @@
+<h1>Hello World</h1>
+
+<!-- form for user manually searching for ingredients to add -->
+<form ng-submit="pairing.searchIngredients(pairing.ingredient)">
+  <input ng-model="pairing.ingredient" type="text">
+  <input type="submit" value="Search Ingredients" ng-click="pairing.toggleSelectElement()">
+</form>
+
+<!-- form that displays results from search in a select input for user to choose -->
+<form ng-show="pairing.showSelectIngredient" ng-submit="pairing.addIngredient(pairing.selected)">
+  <select name="Available Ingredients" ng-model="pairing.selected">
+    <option selected disabled value="">Select an Ingredient to Add</option>
+    <option ng-repeat="ingredient in pairing.searchedIngredients" value="{{ingredient}}">{{ingredient.name}}</option>
+  </select>
+  <input type="submit" value="Add Ingredient" ng-click="pairing.toggleSelectElement()">
+</form>
+
+<div class="container-fluid">
+<!-- div displays the ingredients chosen by user -->
+  <div class="col-sm-4">
+    <h1>Ingredients:</h1>
+    <div ng-repeat="userIngredients in pairing.userIngredients">
+      <p>{{userIngredients.name}} <button ng-click="pairing.removeIngredient(userIngredients)">x</button></p>
+    </div>
+  </div>
+
+  <!-- div displays the suggested food pairings -->
+  <div class="col-sm-8">
+    <h1>Suggested Pairings:</h1>
+    <div ng-repeat="suggestion in pairing.pairings" class="col-sm-4">
+      <p>{{suggestion._links.ingredient.name}}</p>
+      <img src="{{suggestion._links.ingredient._links.image.size_240}}" alt="{{suggestion._links.ingredient.name}}">
+      <button type="button" ng-click="pairing.addIngredient(suggestion._links.ingredient)">Add Ingredient</button>
+    </div>
+  </div>
+</div>
