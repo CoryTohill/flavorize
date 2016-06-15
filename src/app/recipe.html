@@ -27,7 +27,6 @@
     <div ng-repeat="userIngredients in recipe.userIngredients">
       <input type="text" ng-model="userIngredients.amount">
     </div>
-
   </div>
 
   <div class="col-sm-4">
@@ -35,13 +34,11 @@
     <div ng-repeat="userIngredients in recipe.userIngredients">
       <input type="text" ng-model="userIngredients.additionalInfo">
     </div>
-
   </div>
-
-
 </div>
 
 
 <div>
-  <!-- directions text area -->
+  <h2>Directions:</h2>
+  <textarea cols="50" rows="10" ng-model="recipe.directions"></textarea>
 </div>
