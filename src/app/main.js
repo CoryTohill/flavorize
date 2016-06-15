@@ -33,13 +33,20 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
     // calls API search for available foods based on user text
     pairing.searchIngredients = function (ingredient) {
-      FoodPairingFactory.searchIngredients(ingredient)
-        .then((data) => {
-          return pairing.searchedIngredients = data;
-        });
+      // prevents user from searching without entering text
+      if (ingredient === '' || 'undefined') {
+        alert("Search field must not be blank")
+      } else {
+        FoodPairingFactory.searchIngredients(ingredient)
+          .then((data) => {
+            return pairing.searchedIngredients = data;
+          });
+      };
     };
 
     pairing.addIngredient = function (ingredientInfo) {
+
+      // if user added ingredient from suggestion list, the suggestion name is used
       if (pairing.userText === '') {
         pairing.userText = ingredientInfo.name;
       }
