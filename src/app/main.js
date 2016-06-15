@@ -39,18 +39,23 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
         });
     };
 
-    pairing.addIngredient = function (ingredient) {
-      // resets the user text input
-      pairing.ingredient = '';
-
-      // parses ingredient if what is passed in is not alreay an object
-      if (typeof ingredient !== "object") {
-        ingredient = JSON.parse(ingredient);
+    pairing.addIngredient = function (ingredientInfo) {
+      if (pairing.userText === '') {
+        pairing.userText = ingredientInfo.name;
       }
 
-      pairing.userIngredients.push(ingredient);
+      // parses ingredient if what is passed in is not alreay an object
+      if (typeof ingredientInfo !== "object") {
+        ingredientInfo = JSON.parse(ingredientInfo);
+      }
+      ingredientInfo.userIngredientName = pairing.userText;
+
+      pairing.userIngredients.push(ingredientInfo);
 
       getPairingSuggestions();
+
+      // resets the user text input
+      pairing.userText = '';
     };
 
     // removes selected ingredient from user array and gets new suggestions

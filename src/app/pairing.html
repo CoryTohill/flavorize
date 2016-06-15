@@ -1,8 +1,8 @@
 <div ng-controller="PairingCtrl as pairing">
 
   <!-- form for user manually searching for ingredients to add -->
-  <form ng-submit="pairing.searchIngredients(pairing.ingredient)">
-    <input ng-model="pairing.ingredient" type="text">
+  <form ng-submit="pairing.searchIngredients(pairing.userText)">
+    <input ng-model="pairing.userText" type="text">
     <input type="submit" value="Search Ingredients" ng-click="pairing.toggleSelectElement()">
   </form>
 
@@ -20,7 +20,7 @@
     <div class="col-sm-4">
       <h1>Ingredients:</h1>
       <div ng-repeat="userIngredients in pairing.userIngredients">
-        <p>{{userIngredients.name}} <button ng-click="pairing.removeIngredient(userIngredients)">x</button></p>
+        <p>{{userIngredients.userIngredientName}} <button ng-click="pairing.removeIngredient(userIngredients)">x</button></p>
       </div>
     </div>
 

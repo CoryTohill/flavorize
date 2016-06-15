@@ -15,7 +15,7 @@
     <div class="col-sm-4">
       <h2>Ingredients:</h2>
       <div ng-repeat="userIngredients in recipe.userIngredients">
-        <p>{{userIngredients.name}}</p>
+        <input type="text" ng-model="userIngredients.userIngredientName">
       </div>
     </div>
 
