@@ -1,5 +1,6 @@
 angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
+//****************** Pairing Page***********************
 
   .controller('PairingCtrl', function (FoodPairingFactory) {
     const pairing = this;
@@ -85,4 +86,15 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
         return $http(pairingRequest).then((response) => data = response.data);
       }
     };
+  })
+
+
+
+//**************************** Recipe Page *****************************
+
+  .controller('RecipeCtrl', function () {
+    const recipe = this;
+
+
+
   })

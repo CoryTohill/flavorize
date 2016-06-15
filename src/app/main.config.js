@@ -6,4 +6,9 @@ angular.module('app')
         controllerAs: 'pairing',
         templateUrl: '/app/pairing.html'
       })
+      .when('/recipe', {
+        controller: 'RecipeCtrl',
+        controllerAs: 'recipe',
+        templateUrl: '/app/recipe.html'
+      })
   ));
