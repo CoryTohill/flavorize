@@ -121,6 +121,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     recipe.userIngredients = UserRecipe.getRecipe();
     console.log("recipe one",recipe.userIngredients);
 
+
   })
 
 
