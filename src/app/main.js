@@ -34,7 +34,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     // calls API search for available foods based on user text
     pairing.searchIngredients = function (ingredient) {
       // prevents user from searching without entering text
-      if (ingredient === '' || 'undefined') {
+      if (ingredient === ('' || 'undefined')) {
         alert("Search field must not be blank")
       } else {
         FoodPairingFactory.searchIngredients(ingredient)
@@ -56,6 +56,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
         ingredientInfo = JSON.parse(ingredientInfo);
       }
       ingredientInfo.userIngredientName = pairing.userText;
+      console.log(ingredientInfo)
 
       pairing.userIngredients.push(ingredientInfo);
 
