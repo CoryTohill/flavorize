@@ -133,11 +133,13 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
   .controller('RecipeEditorCtrl', function () {
     const recipeEditor = this;
-    recipeEditor.page = "Food Pairing";
+
+    // defines the default tab to display when switchen to recipeEditor route
+    recipeEditor.viewTab = "Food Pairing";
 
     recipeEditor.tabs = ["Recipe", "Food Pairing", "Nutrition"];
-    recipeEditor.apple = function (word) {
-      recipeEditor.page = word;
-      console.log(word)
-    }
+
+    recipeEditor.changeTab = function (newTab) {
+      recipeEditor.viewTab = newTab;
+    };
   })
