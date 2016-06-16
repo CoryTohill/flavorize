@@ -108,17 +108,28 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
     recipeEditor.changeTab = function (newTab) {
       recipeEditor.viewTab = newTab;
-
     };
 
-    recipeEditor.addFlavorProfile = function (ingredient, selectedProfile) {
-      // doesn't parse flavor profile if user chooses Ignore Ingredient option
-      if (selectedProfile !== "ignore") {
-        ingredient.flavorProfile = JSON.parse(selectedProfile);
 
+    function updatePairings () {
       recipeEditor.pairings = [];
+
       FoodPairingFactory.suggestPairings()
         .then((data) => recipeEditor.pairings = data);
+    }
+
+
+    recipeEditor.addFlavorProfile = function (ingredient, selectedProfile) {
+
+      // won't update pairing suggestions if user chooses the ignore option if unless profile was previously something else
+      if (selectedProfile !== "ignore") {
+        ingredient.flavorProfile = JSON.parse(selectedProfile);
+        updatePairings();
+
+      } else if (ingredient.flavorProfile !== "ignore") {
+        ingredient.flavorProfile = selectedProfile;
+        updatePairings();
+
       } else {
         ingredient.flavorProfile = "ignore";
       }
