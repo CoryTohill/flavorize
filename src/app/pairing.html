@@ -1,25 +1,22 @@
 <div>
 
 <!-- div displays the flavor profile selector inputs for each ingredient -->
-  <div class="col-sm-4">
+  <div class="col-sm-3">
     <h1>Flavor Profile:</h1>
     <div ng-repeat="ingredient in recipeEditor.userIngredients">
       <p>
-        <form ng-submit="recipeEditor.addFlavorProfile(ingredient, ingredient.selected)">
-          <select ng-model="ingredient.selected">
+          <select ng-change="recipeEditor.addFlavorProfile(ingredient, ingredient.selected)" ng-model="ingredient.selected">
             <option selected disabled value="ignore">Select a Flavor Profile</option>
             <option ng-repeat="option in ingredient.searchedIngredients" value="{{option}}">{{option.name}}</option>
             <option value="ignore">Ignore this Ingredient</option>
           </select>
-          <input type="submit" value="submit">
-        </form>
       </p>
     </div>
   </div>
 
 
     <!-- div displays the suggested food pairings -->
-    <div class="col-sm-4">
+    <div class="col-sm-6">
       <h1>Suggested Pairings:</h1>
       <div ng-repeat="suggestion in recipeEditor.pairings" class="col-sm-4">
         <p>{{suggestion._links.ingredient.name}}</p>

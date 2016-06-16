@@ -155,18 +155,23 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
 
     recipeEditor.addIngredient = function (ingredientName) {
-      const ingredient = {};
+      // tests if user inputs text correctly before running
+      if (ingredientName === ('' || undefined)) {
+        alert("Incorrect Text Input");
+      } else {
+        const ingredient = {};
 
-      ingredient.userIngredientName = ingredientName;
+        ingredient.userIngredientName = ingredientName;
 
-      FoodPairingFactory.searchIngredients(ingredientName)
-        .then((data) => {
-          return ingredient.searchedIngredients = data;
-        })
+        FoodPairingFactory.searchIngredients(ingredientName)
+          .then((data) => {
+            return ingredient.searchedIngredients = data;
+          })
 
-      recipeEditor.userIngredients.push(ingredient);
+        recipeEditor.userIngredients.push(ingredient);
 
-      // resets the user text input
-      recipeEditor.userText = '';
+        // resets the user text input
+        recipeEditor.userText = '';
+      };
     };
   })
