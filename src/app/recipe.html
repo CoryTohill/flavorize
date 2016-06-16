@@ -1,34 +1,23 @@
-<div ng-controller="RecipeCtrl as recipe">
+<div>
 
   <label for="recipeTitle">Title:</label>
-  <input type="text" id="recipeTitle" ng-model="recipe.title">
+  <input type="text" id="recipeTitle" ng-model="recipeEditor.title">
 
   <label for="recipeAuthor">Author:</label>
-  <input type="text" id="recipeAuthor" ng-model="recipe.author">
+  <input type="text" id="recipeAuthor" ng-model="recipeEditor.author">
 
-  <form ng-submit="">
-    <input ng-model="recipe.ingredient" type="text">
-    <input type="submit" value="Add Ingredient" ng-click="">
-  </form>
 
   <div class="container">
     <div class="col-sm-4">
-      <h2>Ingredients:</h2>
-      <div ng-repeat="userIngredients in recipe.userIngredients">
-        <input type="text" ng-model="userIngredients.userIngredientName">
-      </div>
-    </div>
-
-    <div class="col-sm-4">
       <h2>Amount:</h2>
-      <div ng-repeat="userIngredients in recipe.userIngredients">
+      <div ng-repeat="userIngredients in recipeEditor.userIngredients">
         <input type="text" ng-model="userIngredients.amount">
       </div>
     </div>
 
     <div class="col-sm-4">
       <h2>Additional Info:</h2>
-      <div ng-repeat="userIngredients in recipe.userIngredients">
+      <div ng-repeat="userIngredients in recipeEditor.userIngredients">
         <input type="text" ng-model="userIngredients.additionalInfo">
       </div>
     </div>
@@ -37,7 +26,7 @@
 
   <div>
     <h2>Directions:</h2>
-    <textarea cols="50" rows="10" ng-model="recipe.directions"></textarea>
+    <textarea cols="50" rows="10" ng-model="recipeEditor.directions"></textarea>
   </div>
 
 </div>

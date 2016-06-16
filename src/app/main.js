@@ -2,81 +2,29 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
 //****************** Pairing Page***********************
 
-  .controller('PairingCtrl', function (FoodPairingFactory, UserRecipe) {
+ //  .controller('PairingCtrl', function (FoodPairingFactory, UserRecipe) {
 
-    const pairing = this;
-    pairing.userIngredients = UserRecipe.getRecipe();
-    pairing.searchedIngredients = [];
-    pairing.showSelectIngredient = false;
+ //    const pairing = this;
 
-    // pairing.setUserRecipe = function () {
-    //   UserRecipe.setRecipe(pairing.userIngredients);
-    // }
+ //    }
 
-    function getPairingSuggestions () {
-      // clears the suggestions displayed
-      pairing.pairings = [];
-      // gets all food ids from user ingredients object
-      const userIngredientsIds = pairing.userIngredients.map((obj) => obj.id);
-
-      // if statement prevents factory from firing if user has no ingredients selected
-      if (0 < userIngredientsIds.length) {
-        FoodPairingFactory.suggestPairings(userIngredientsIds)
-          .then((data) => { return pairing.pairings = data; });
-      }
-    };
-
-    // changes value for ng-show to the opposite of what it is currently set as
-    pairing.toggleSelectElement = function () {
-      pairing.showSelectIngredient = !pairing.showSelectIngredient;
-    };
-
-    // calls API search for available foods based on user text
-    pairing.searchIngredients = function (ingredient) {
-      // prevents user from searching without entering text
-      if (ingredient === ('' || 'undefined')) {
-        alert("Search field must not be blank")
-      } else {
-        FoodPairingFactory.searchIngredients(ingredient)
-          .then((data) => {
-            return pairing.searchedIngredients = data;
-          });
-      };
-    };
-
-    pairing.addIngredient = function (ingredientInfo) {
-
-      // if user added ingredient from suggestion list, the suggestion name is used
-      if (pairing.userText === '') {
-        pairing.userText = ingredientInfo.name;
-      }
-
-      // parses ingredient if what is passed in is not alreay an object
-      if (typeof ingredientInfo !== "object") {
-        ingredientInfo = JSON.parse(ingredientInfo);
-      }
-      ingredientInfo.userIngredientName = pairing.userText;
-      console.log(ingredientInfo)
-
-      pairing.userIngredients.push(ingredientInfo);
-
-      getPairingSuggestions();
-
-      // resets the user text input
-      pairing.userText = '';
-    };
-
-    // removes selected ingredient from user array and gets new suggestions
-    pairing.removeIngredient = function (ingredient) {
-      const index = pairing.userIngredients.indexOf(ingredient);
-      pairing.userIngredients.splice(index, 1);
-
-      getPairingSuggestions();
-    };
-  })
+ //    // recipeEditor.getPairingSuggestions = function () {
+ //    //   // clears the suggestions displayed
+ //    //   pairing.pairings = [];
 
 
-  .factory('FoodPairingFactory', ($http) => {
+ //    //   // if statement prevents factory from firing if user has no ingredients selected
+ //    //   if (0 < userIngredientIds.length) {
+ //    //     FoodPairingFactory.suggestPairings(userIngredientIds)
+ //    //       .then((data) => { return pairing.pairings = data; });
+ //    //   }
+ //    // };
+
+ //    // recipeEditor.getPairingSuggestions();
+ // })
+
+
+  .factory('FoodPairingFactory', ($http, UserRecipe) => {
     return {
       searchIngredients (ingredient) {
         const searchRequest = {
@@ -90,11 +38,23 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
         return $http(searchRequest).then((response) => data = response.data);
       },
 
-      suggestPairings (ingredientIds) {
-        const Ids = ingredientIds.join();
+      suggestPairings () {
+        const userIngredients = UserRecipe.getRecipe();
+        let userIngredientIds = [];
+
+        // gets all food ids from user ingredients object if they have a flavor profile that isn't ignored
+        userIngredients.forEach(function (ingredient) {
+          if (ingredient.flavorProfile && ingredient.flavorProfile !== 'ignore') {
+            userIngredientIds.push(ingredient.flavorProfile.id)
+          }
+        })
+
+        // format the ingredient Ids into a string with commas between values
+        userIngredientIds = userIngredientIds.join();
+
         const pairingRequest = {
           method: 'GET',
-          url: `https://api.foodpairing.com/ingredients/${Ids}/pairings?order=matches[all][rel]`,
+          url: `https://api.foodpairing.com/ingredients/${userIngredientIds}/pairings?order=matches[all][rel]`,
           headers: {
             'X-Application-ID': '83dc83f5',
             'X-Application-Key': 'f1a7be912dca2656623166a8a1715478'
@@ -118,9 +78,6 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
         console.log("factory get userRecipe", userRecipe);
         return userRecipe;
       },
-      setRecipe (recipe) {
-        userRecipe = recipe;
-      }
     }
   })
 
@@ -128,14 +85,6 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
 //**************************** Recipe Page *****************************
 
-  .controller('RecipeCtrl', function (UserRecipe) {
-    const recipe = this;
-
-    recipe.userIngredients = UserRecipe.getRecipe();
-    console.log("recipe one",recipe.userIngredients);
-
-
-  })
 
 
   .controller('MainNavCtrl', function () {
@@ -144,8 +93,13 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
   })
 
 
-  .controller('RecipeEditorCtrl', function () {
+
+
+  .controller('RecipeEditorCtrl', function (UserRecipe, FoodPairingFactory, $timeout, $scope) {
     const recipeEditor = this;
+
+    recipeEditor.userIngredients = UserRecipe.getRecipe();
+    recipeEditor.searchedIngredients = [];
 
     // defines the default tab to display when switchen to recipeEditor route
     recipeEditor.viewTab = "Food Pairing";
@@ -154,5 +108,65 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
     recipeEditor.changeTab = function (newTab) {
       recipeEditor.viewTab = newTab;
+
+    };
+
+    recipeEditor.addFlavorProfile = function (ingredient, selectedProfile) {
+      // doesn't parse flavor profile if user chooses Ignore Ingredient option
+      if (selectedProfile !== "ignore") {
+        ingredient.flavorProfile = JSON.parse(selectedProfile);
+
+      recipeEditor.pairings = [];
+      FoodPairingFactory.suggestPairings()
+        .then((data) => recipeEditor.pairings = data);
+      } else {
+        ingredient.flavorProfile = "ignore";
+      }
+    }
+
+
+    // removes selected ingredient from user array and gets new suggestions
+    recipeEditor.removeIngredient = function (ingredient) {
+      recipeEditor.pairings = [];
+      const index = recipeEditor.userIngredients.indexOf(ingredient);
+      recipeEditor.userIngredients.splice(index, 1);
+
+      FoodPairingFactory.suggestPairings()
+        .then((data) => {
+          recipeEditor.pairings = data
+        })
+        ;
+    };
+
+
+    // calls API search for available foods based on user text
+    recipeEditor.searchIngredients = function (ingredient) {
+      // prevents user from searching without entering text
+      if (ingredient === ('' || 'undefined')) {
+        alert("Search field must not be blank")
+      } else {
+        recipeEditor.userIngredients.userIngredientName = ingredient;
+        FoodPairingFactory.searchIngredients(ingredient)
+          .then((data) => {
+            return recipeEditor.searchedIngredients = data;
+          });
+      };
+    };
+
+
+    recipeEditor.addIngredient = function (ingredientName) {
+      const ingredient = {};
+
+      ingredient.userIngredientName = ingredientName;
+
+      FoodPairingFactory.searchIngredients(ingredientName)
+        .then((data) => {
+          return ingredient.searchedIngredients = data;
+        })
+
+      recipeEditor.userIngredients.push(ingredient);
+
+      // resets the user text input
+      recipeEditor.userText = '';
     };
   })
