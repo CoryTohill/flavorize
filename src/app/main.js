@@ -121,12 +121,12 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
     recipeEditor.addFlavorProfile = function (ingredient, selectedProfile) {
 
-      // won't update pairing suggestions if user chooses the ignore option if unless profile was previously something else
+      // won't update pairing suggestions if user chooses the ignore option unless profile was previously something else
       if (selectedProfile !== "ignore") {
         ingredient.flavorProfile = JSON.parse(selectedProfile);
         updatePairings();
 
-      } else if (ingredient.flavorProfile !== "ignore") {
+      } else if (ingredient.flavorProfile) {
         ingredient.flavorProfile = selectedProfile;
         updatePairings();
 
