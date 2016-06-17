@@ -1,9 +1,14 @@
 angular.module('app')
   .config(($routeProvider) => (
     $routeProvider
-      .when('/pairing', {
-        controller: 'PairingCtrl',
-        controllerAs: 'pairing',
-        templateUrl: '/app/pairing.html'
+      .when('/recipeEditor', {
+        controller: 'RecipeEditorCtrl',
+        controllerAs: 'recipeEditor',
+        templateUrl: '/app/recipeEditor.html'
+      })
+      .when('/recipe', {
+        controller: 'RecipeCtrl',
+        controllerAs: 'recipe',
+        templateUrl: '/app/recipe.html'
       })
   ));

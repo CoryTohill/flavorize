@@ -1,0 +1,32 @@
+<div>
+
+  <label for="recipeTitle">Title:</label>
+  <input type="text" id="recipeTitle" ng-model="recipeEditor.title">
+
+  <label for="recipeAuthor">Author:</label>
+  <input type="text" id="recipeAuthor" ng-model="recipeEditor.author">
+
+
+  <div class="container">
+    <div class="col-sm-4">
+      <h2>Amount:</h2>
+      <div ng-repeat="userIngredients in recipeEditor.userIngredients">
+        <input type="text" ng-model="userIngredients.amount">
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <h2>Additional Info:</h2>
+      <div ng-repeat="userIngredients in recipeEditor.userIngredients">
+        <input type="text" ng-model="userIngredients.additionalInfo">
+      </div>
+    </div>
+  </div>
+
+
+  <div>
+    <h2>Directions:</h2>
+    <textarea cols="50" rows="10" ng-model="recipeEditor.directions"></textarea>
+  </div>
+
+</div>

@@ -6,7 +6,11 @@
   </head>
   <body>
     <div ng-app="app">
-      <div ng-view></div>
+      <div ng-controller="MainNavCtrl as mainNav">
+        <!-- site nav bar goes here -->
+          <div ng-view></div>
+        </div>
+      </div>
     </div>
 
 
