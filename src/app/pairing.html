@@ -4,13 +4,13 @@
   <div class="col-sm-3">
     <h1>Flavor Profile:</h1>
     <div ng-repeat="ingredient in recipeEditor.userIngredients">
-      <p>
-          <select ng-change="recipeEditor.addFlavorProfile(ingredient, ingredient.selected)" ng-model="ingredient.selected">
-            <option selected disabled value="ignore">Select a Flavor Profile</option>
-            <option ng-repeat="option in ingredient.searchedIngredients" value="{{option}}">{{option.name}}</option>
-            <option value="ignore">Ignore this Ingredient</option>
-          </select>
-      </p>
+      <div>
+        <select ng-change="recipeEditor.addFlavorProfile(ingredient, ingredient.selected)" ng-model="ingredient.selected">
+          <option selected disabled value="">Select a Flavor Profile</option>
+          <option ng-repeat="option in ingredient.searchedIngredients" value="{{option}}">{{option.name}}</option>
+          <option value="ignore">Ignore this Ingredient</option>
+        </select>
+      </div>
     </div>
   </div>
 
