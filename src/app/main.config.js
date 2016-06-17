@@ -4,7 +4,7 @@ angular.module('app')
       .when('/recipeEditor', {
         controller: 'RecipeEditorCtrl',
         controllerAs: 'recipeEditor',
-        templateUrl: '/app/recipeEditor.html'
+        templateUrl: '/app/recipeEditor/recipeEditor.html'
       })
       .when('/recipe', {
         controller: 'RecipeCtrl',
