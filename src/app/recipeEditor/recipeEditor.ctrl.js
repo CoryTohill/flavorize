@@ -41,17 +41,20 @@ angular.module('app')
     }
 
 
-    // removes selected ingredient from user array and gets new suggestions
+    // removes selected ingredient from user array
     recipeEditor.removeIngredient = function (ingredient) {
-      recipeEditor.pairings = [];
       const index = recipeEditor.userIngredients.indexOf(ingredient);
       recipeEditor.userIngredients.splice(index, 1);
 
-      FoodPairingFactory.suggestPairings()
-        .then((data) => {
-          recipeEditor.pairings = data
+      // gets new suggestions if the deleted ingredient has a flavor profile selected other than ignore
+      if (ingredient.flavorProfile && ingredient.flavorProfile !== "ignore") {
+        recipeEditor.pairings = [];
+
+        FoodPairingFactory.suggestPairings()
+          .then((data) => {
+            recipeEditor.pairings = data
         })
-        ;
+      };
     };
 
 
