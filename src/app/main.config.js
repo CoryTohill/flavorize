@@ -6,9 +6,9 @@ angular.module('app')
         controllerAs: 'recipeEditor',
         templateUrl: '/app/recipeEditor/recipeEditor.html'
       })
-      .when('/recipe', {
-        controller: 'RecipeCtrl',
-        controllerAs: 'recipe',
-        templateUrl: '/app/recipe.html'
+      .when('/login', {
+        controller: 'LoginCtrl',
+        controllerAs: 'auth',
+        templateUrl: '/app/login.html'
       })
   ));

@@ -1,10 +1,10 @@
 <!-- recipe editor navigation tabs -->
 <a href="#/recipeEditor"
   ng-click="recipeEditor.changeTab(tab)"
-  ng-repeat="tab in recipeEditor.tabs"
-  >
-  {{tab}}
-  </a>
+  ng-repeat="tab in recipeEditor.tabs">
+  {{tab}}</a>
+
+<button ng-click="recipeEditor.saveRecipe()">Save Recipe</button>
 
 <!-- form for user manually adding ingredients -->
   <form ng-submit="recipeEditor.addIngredient(recipeEditor.userText)">

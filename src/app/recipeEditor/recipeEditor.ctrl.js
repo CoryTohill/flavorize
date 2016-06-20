@@ -93,4 +93,8 @@ angular.module('app')
         recipeEditor.userText = '';
       };
     };
+
+    recipeEditor.saveRecipe = function (test) {
+      console.log(recipeEditor.userIngredients);
+    }
   })

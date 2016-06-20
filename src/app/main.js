@@ -19,8 +19,46 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
   })
 
 
+//**************************** Firebase Authorization *****************************
 
+  .factory('AuthFactory', ($timeout) => {
+    let currentUser = null;
 
+    return {
+      login (email, password) {
+        return $timeout().then(() => (
+          firebase.auth().signInWithEmailAndPassword(email, password)
+        )).then((loginResponse) => currentUser = loginResponse.uid);
+      },
+
+      logout () {
+       return $timeout().then(() => (
+          firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+            currentUser = null;
+          }, function(error) {
+            // An error happened.
+            alert('Error Loggin Out');
+          })
+        ))
+      },
+
+      getUser () {
+        return currentUser;
+      }
+    };
+  })
+
+  .controller('LoginCtrl', function (AuthFactory, $location) {
+    const auth = this;
+
+    auth.login = function () {
+      AuthFactory.login(auth.user.email, auth.user.password)
+        // .then((loginInfo) => auth.currentUser = loginInfo.uid)
+        .then(() => $location.path('/recipeEditor'))
+    }
+
+  })
 
 
 
