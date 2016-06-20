@@ -16,7 +16,7 @@
   <!-- div displays the ingredients chosen by user -->
     <div class="col-sm-3">
       <h1>Ingredients:</h1>
-      <div ng-repeat="ingredient in recipeEditor.userIngredients">
+      <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
         <p>{{ingredient.userIngredientName}} <button ng-click="recipeEditor.removeIngredient(ingredient)">x</button></p>
       </div>
     </div>

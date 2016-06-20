@@ -6,7 +6,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
   .factory('UserRecipe', () => {
     // will eventually be a call to firebase to get recipe info if editing a recipe
-    const userRecipe = [];
+    const userRecipe = {"ingredients": []};
 
     console.log("userRecipe",userRecipe)
 
@@ -48,6 +48,22 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       }
     };
   })
+
+
+
+  .factory('SaveRecipeFactory', ($http) => {
+
+    return {
+      save (recipe) {
+        // [0: {}, 1: {}, author: "Me"]
+        // { ingredients: [0: {}, 1: {}], author: "Me"}
+
+        return $http.post(`https://flavorize-front-end-capstone.firebaseio.com/recipes.json`, recipe)
+      }
+    }
+  })
+
+
 
   .controller('LoginCtrl', function (AuthFactory, $location) {
     const auth = this;

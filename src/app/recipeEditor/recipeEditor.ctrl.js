@@ -1,10 +1,13 @@
 angular.module('app')
 
-  .controller('RecipeEditorCtrl', function (UserRecipe, FoodPairingFactory, $timeout, $scope) {
+  .controller('RecipeEditorCtrl', function (UserRecipe, FoodPairingFactory, SaveRecipeFactory, AuthFactory) {
     const recipeEditor = this;
+    const uid = AuthFactory.getUser();
 
-    recipeEditor.userIngredients = UserRecipe.getRecipe();
+    recipeEditor.recipe = UserRecipe.getRecipe();
+    recipeEditor.recipe.uid = uid;
     recipeEditor.searchedIngredients = [];
+
 
     // defines the default tab to display when switchen to recipeEditor route
     recipeEditor.viewTab = "Food Pairing";
@@ -17,6 +20,7 @@ angular.module('app')
 
 
     function updatePairings () {
+      console.log("update")
       recipeEditor.pairings = [];
 
       FoodPairingFactory.suggestPairings()
@@ -25,7 +29,7 @@ angular.module('app')
 
 
     recipeEditor.addFlavorProfile = function (ingredient, selectedProfile) {
-
+      console.log("flavorProfile",ingredient)
       // won't update pairing suggestions if user chooses the ignore option unless profile was previously something else
       if (selectedProfile !== "ignore") {
         ingredient.flavorProfile = JSON.parse(selectedProfile);
@@ -38,13 +42,14 @@ angular.module('app')
       } else {
         ingredient.flavorProfile = "ignore";
       }
+      console.log("fin")
     }
 
 
     // removes selected ingredient from user array
     recipeEditor.removeIngredient = function (ingredient) {
-      const index = recipeEditor.userIngredients.indexOf(ingredient);
-      recipeEditor.userIngredients.splice(index, 1);
+      const index = recipeEditor.recipe.indexOf(ingredient);
+      recipeEditor.recipe.splice(index, 1);
 
       // gets new suggestions if the deleted ingredient has a flavor profile selected other than ignore
       if (ingredient.flavorProfile && ingredient.flavorProfile !== "ignore") {
@@ -64,10 +69,10 @@ angular.module('app')
       if (ingredient === ('' || 'undefined')) {
         alert("Search field must not be blank")
       } else {
-        recipeEditor.userIngredients.userIngredientName = ingredient;
+        recipeEditor.recipe.ingredients.userIngredientName = ingredient;
         FoodPairingFactory.searchIngredients(ingredient)
           .then((data) => {
-            return recipeEditor.searchedIngredients = data;
+            return recipeEditor.recipe.ingredients.searchedIngredients = data;
           });
       };
     };
@@ -87,7 +92,7 @@ angular.module('app')
             return ingredient.searchedIngredients = data;
           })
 
-        recipeEditor.userIngredients.push(ingredient);
+        recipeEditor.recipe.ingredients.push(ingredient);
 
         // resets the user text input
         recipeEditor.userText = '';
@@ -95,6 +100,7 @@ angular.module('app')
     };
 
     recipeEditor.saveRecipe = function (test) {
-      console.log(recipeEditor.userIngredients);
+      SaveRecipeFactory.save(recipeEditor.recipe)
+      console.log(recipeEditor.recipe);
     }
   })

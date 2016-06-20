@@ -3,7 +3,7 @@
 <!-- div displays the flavor profile selector inputs for each ingredient -->
   <div class="col-sm-3">
     <h1>Flavor Profile:</h1>
-    <div ng-repeat="ingredient in recipeEditor.userIngredients">
+    <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
       <div>
         <select ng-change="recipeEditor.addFlavorProfile(ingredient, selected)" ng-model="selected">
           <option selected disabled value="">Select a Flavor Profile</option>
