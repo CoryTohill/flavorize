@@ -4,7 +4,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
 //**************************** User Recipe Object Factory *****************************
 
-  .factory('UserRecipe', () => {
+  .factory('UserRecipe', ($http) => {
     // will eventually be a call to firebase to get recipe info if editing a recipe
     const userRecipe = {"ingredients": []};
 
@@ -14,6 +14,9 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       getRecipe () {
         console.log("factory get userRecipe", userRecipe);
         return userRecipe;
+      },
+      getAllRecipes () {
+        return $http.get(`https://flavorize-front-end-capstone.firebaseio.com/recipes.json`);
       },
     }
   })
@@ -76,5 +79,15 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
 
 
+  .controller('UserHomeCtrl', function (AuthFactory, UserRecipe) {
+    const userHome = this;
+    const uid = AuthFactory.getUser();
+    UserRecipe.getAllRecipes()
+      .then((response) => userHome.userRecipes = response.data);
 
+
+
+
+
+  })
 

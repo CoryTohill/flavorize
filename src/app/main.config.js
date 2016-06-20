@@ -11,4 +11,9 @@ angular.module('app')
         controllerAs: 'auth',
         templateUrl: '/app/login.html'
       })
+      .when('/userHome', {
+        controller: 'UserHomeCtrl',
+        controllerAs: 'userHome',
+        templateUrl: '/app/userHome.html'
+      })
   ));
