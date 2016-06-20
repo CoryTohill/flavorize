@@ -55,8 +55,6 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
     return {
       save (recipe) {
-        // [0: {}, 1: {}, author: "Me"]
-        // { ingredients: [0: {}, 1: {}], author: "Me"}
 
         return $http.post(`https://flavorize-front-end-capstone.firebaseio.com/recipes.json`, recipe)
       }
