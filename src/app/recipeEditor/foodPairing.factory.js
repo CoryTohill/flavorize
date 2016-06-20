@@ -14,11 +14,11 @@ angular.module('app')
       },
 
       suggestPairings () {
-        const userIngredients = UserRecipe.getRecipe();
+        const recipe = UserRecipe.getRecipe();
         let userIngredientIds = [];
 
         // gets all food ids from user ingredients object if they have a flavor profile that isn't ignored
-        userIngredients.forEach(function (ingredient) {
+        recipe.ingredients.forEach(function (ingredient) {
           if (ingredient.flavorProfile && ingredient.flavorProfile !== 'ignore') {
             userIngredientIds.push(ingredient.flavorProfile.id)
           }
