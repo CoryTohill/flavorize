@@ -8,6 +8,8 @@ angular.module('app')
     recipeEditor.recipe.uid = uid;
     recipeEditor.searchedIngredients = [];
 
+    updatePairings();
+
 
     // defines the default tab to display when switchen to recipeEditor route
     recipeEditor.viewTab = "Food Pairing";
@@ -41,6 +43,7 @@ angular.module('app')
 
       } else {
         ingredient.flavorProfile = "ignore";
+        ingredient.flavorProfile.name = "ignore";
       }
       console.log("fin")
     }

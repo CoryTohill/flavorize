@@ -6,7 +6,7 @@
     <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
       <div>
         <select ng-change="recipeEditor.addFlavorProfile(ingredient, selected)" ng-model="selected">
-          <option selected disabled value="">Select a Flavor Profile</option>
+          <option selected disabled value="">{{ingredient.flavorProfile.name}}</option>
           <option ng-repeat="option in ingredient.searchedIngredients" value="{{option}}">{{option.name}}</option>
           <option value="ignore">Ignore this Ingredient</option>
         </select>
