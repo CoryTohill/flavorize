@@ -1,5 +1,8 @@
 <h1>User Home Page</h1>
 
-<div ng-repeat="recipe in userHome.userRecipes">
-  <p>{{recipe.title}}</p>
+<div class="container-fluid">
+  <div ng-repeat="recipe in userHome.userRecipes" class="col-md-2">
+    <p>{{recipe.title}}</p>
+    <p>{{recipe.author}}</p>
+  </div>
 </div>

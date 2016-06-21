@@ -4,7 +4,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
 //**************************** User Recipe Object Factory *****************************
 
-  .factory('UserRecipe', ($http) => {
+  .factory('UserRecipe', ($http, $timeout) => {
     // will eventually be a call to firebase to get recipe info if editing a recipe
     const userRecipe = {"ingredients": []};
 
@@ -15,8 +15,9 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
         console.log("factory get userRecipe", userRecipe);
         return userRecipe;
       },
-      getAllRecipes () {
-        return $http.get(`https://flavorize-front-end-capstone.firebaseio.com/recipes.json`);
+      getUserRecipes () {
+        const currentUser = firebase.auth().currentUser.uid;
+        return firebase.database().ref('recipes/');
       },
     }
   })
@@ -72,22 +73,27 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     auth.login = function () {
       AuthFactory.login(auth.user.email, auth.user.password)
         // .then((loginInfo) => auth.currentUser = loginInfo.uid)
-        .then(() => $location.path('/recipeEditor'))
+        .then(() => $location.path('/userHome'))
     }
 
   })
 
 
 
-  .controller('UserHomeCtrl', function (AuthFactory, UserRecipe) {
+  .controller('UserHomeCtrl', function (AuthFactory, UserRecipe, $timeout) {
     const userHome = this;
-    const uid = AuthFactory.getUser();
-    UserRecipe.getAllRecipes()
-      .then((response) => userHome.userRecipes = response.data);
+    // userHome.uid = AuthFactory.getUser();
+    // UserRecipe.getUserRecipes()
+    const currentUser = firebase.auth().currentUser.uid;
+    console.log("CU", currentUser)
+
+    $timeout()
+      .then(() => firebase.database().ref('/recipes').orderByChild('uid').equalTo(currentUser).once('value'))
+      .then(snap => snap.val())
+      .then(data =>  console.log(data));
 
 
-
-
+      // .then((response) => userHome.userRecipes = response.data);
 
   })
 
