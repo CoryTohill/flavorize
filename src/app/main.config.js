@@ -16,4 +16,9 @@ angular.module('app')
         controllerAs: 'userHome',
         templateUrl: '/app/userHome.html'
       })
+      .when('/viewRecipe', {
+        controller: 'ViewRecipeCtrl',
+        controllerAs: 'view',
+        templateUrl: '/app/viewRecipe.html'
+      })
   ));

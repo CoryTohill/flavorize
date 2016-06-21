@@ -6,7 +6,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
   .factory('UserRecipe', ($http, $timeout) => {
     // will eventually be a call to firebase to get recipe info if editing a recipe
-    const userRecipe = {"ingredients": []};
+    let userRecipe = {"ingredients": []};
 
     console.log("userRecipe",userRecipe)
 
@@ -15,9 +15,17 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
         console.log("factory get userRecipe", userRecipe);
         return userRecipe;
       },
-      getUserRecipes () {
-        const currentUser = firebase.auth().currentUser.uid;
-        return firebase.database().ref('recipes/');
+      setRecipe (newRecipe) {
+        userRecipe = newRecipe;
+      },
+      getUserRecipes (uid) {
+        return $timeout()
+          .then(() => firebase.database()
+                        .ref('/recipes')
+                        .orderByChild('uid')
+                        .equalTo(uid)
+                        .once('value'))
+          .then(snap => snap.val())
       },
     }
   })
@@ -80,20 +88,23 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
 
 
-  .controller('UserHomeCtrl', function (AuthFactory, UserRecipe, $timeout) {
+  .controller('UserHomeCtrl', function (AuthFactory, UserRecipe, $location) {
     const userHome = this;
-    // userHome.uid = AuthFactory.getUser();
-    // UserRecipe.getUserRecipes()
     const currentUser = firebase.auth().currentUser.uid;
-    console.log("CU", currentUser)
 
-    $timeout()
-      .then(() => firebase.database().ref('/recipes').orderByChild('uid').equalTo(currentUser).once('value'))
-      .then(snap => snap.val())
-      .then(data =>  console.log(data));
+    UserRecipe.getUserRecipes(currentUser)
+      .then((response) => userHome.userRecipes = response);
 
+    userHome.viewRecipe = function (recipe) {
+      UserRecipe.setRecipe(recipe);
+      $location.path('/viewRecipe');
+    }
 
-      // .then((response) => userHome.userRecipes = response.data);
+  })
 
+  .controller('ViewRecipeCtrl', function (UserRecipe) {
+    const view = this;
+    view.recipe = UserRecipe.getRecipe();
+    console.log("view.recipe", view.recipe)
   })
 
