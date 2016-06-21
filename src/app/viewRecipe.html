@@ -1,5 +1,22 @@
-<h1>hello view recipe world</h1>
+<h1>View Recipe</h1>
 
+<div class="container">
 <div ng-repeat="recipe in view">
-  <p>{{recipe.title}}</p>
+  <h1 class="col-sm-12">{{recipe.title}}</h1>
+  <h2 class="col-sm-12">By: {{recipe.author}}</h2>
+    <div class="col-sm-6">
+      <h3>Ingredients:</h3>
+      <div ng-repeat="ingredient in recipe.ingredients">
+        <p>{{ingredient.userIngredientName}}</p>
+        <p>{{ingredient.additionalInfo}}</p>
+        <p>{{ingredient.amount}}</p>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <!-- picture will go here -->
+      <p>picture goes here</p>
+    </div>
+    <h3 class="col-sm-12">Directions:</h3>
+    <p class="col-sm-12">{{recipe.directions}}</p>
+  </div>
 </div>
