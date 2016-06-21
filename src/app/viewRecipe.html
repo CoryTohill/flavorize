@@ -1,12 +1,13 @@
 <h1>View Recipe</h1>
 
+<button ng-show="view.belongsToUser" ng-click="view.editRecipe()">Edit Recipe</button>
+
 <div class="container">
-<div ng-repeat="recipe in view">
-  <h1 class="col-sm-12">{{recipe.title}}</h1>
-  <h2 class="col-sm-12">By: {{recipe.author}}</h2>
+  <h1 class="col-sm-12">{{view.recipe.title}}</h1>
+  <h2 class="col-sm-12">By: {{view.recipe.author}}</h2>
     <div class="col-sm-6">
       <h3>Ingredients:</h3>
-      <div ng-repeat="ingredient in recipe.ingredients">
+      <div ng-repeat="ingredient in view.recipe.ingredients">
         <p>{{ingredient.userIngredientName}}</p>
         <p>{{ingredient.additionalInfo}}</p>
         <p>{{ingredient.amount}}</p>
@@ -17,6 +18,7 @@
       <p>picture goes here</p>
     </div>
     <h3 class="col-sm-12">Directions:</h3>
-    <p class="col-sm-12">{{recipe.directions}}</p>
+    <p class="col-sm-12">{{view.recipe.directions}}</p>
   </div>
 </div>
+

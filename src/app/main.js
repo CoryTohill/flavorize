@@ -102,9 +102,22 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
   })
 
-  .controller('ViewRecipeCtrl', function (UserRecipe) {
+  .controller('ViewRecipeCtrl', function (UserRecipe, $location) {
     const view = this;
+    const currentUser = firebase.auth().currentUser.uid;
+
     view.recipe = UserRecipe.getRecipe();
-    console.log("view.recipe", view.recipe)
+    console.log("view",view.recipe)
+
+    //shows or hides the edit recipe button based on which user is logged in
+    if (currentUser === view.recipe.uid) {
+      view.belongsToUser = true;
+    } else {
+      view.belongsToUser = false;
+    };
+
+    view.editRecipe = function () {
+      $location.path('/recipeEditor')
+    }
   })
 
