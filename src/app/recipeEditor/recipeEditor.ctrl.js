@@ -99,8 +99,14 @@ angular.module('app')
       };
     };
 
-    recipeEditor.saveRecipe = function (test) {
+    recipeEditor.saveRecipe = function () {
       SaveRecipeFactory.save(recipeEditor.recipe)
+        .then((response)=> {
+          // if it is a new save, the key is saved so any subsequent saves will update, not post new recipes
+          if (response.data.name) {
+            UserRecipe.setRecipeKey(response.data.name);
+          };
+        })
       console.log(recipeEditor.recipe);
     }
   })

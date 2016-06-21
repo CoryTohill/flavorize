@@ -7,6 +7,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
   .factory('UserRecipe', ($http, $timeout) => {
     // will eventually be a call to firebase to get recipe info if editing a recipe
     let userRecipe = {"ingredients": []};
+    let recipeKey = "";
 
     console.log("userRecipe",userRecipe)
 
@@ -15,9 +16,19 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
         console.log("factory get userRecipe", userRecipe);
         return userRecipe;
       },
+
       setRecipe (newRecipe) {
         userRecipe = newRecipe;
       },
+
+      getRecipeKey () {
+        return recipeKey;
+      },
+
+      setRecipeKey (newKey) {
+        recipeKey = newKey;
+      },
+
       getUserRecipes (uid) {
         return $timeout()
           .then(() => firebase.database()
@@ -63,12 +74,16 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
 
 
-  .factory('SaveRecipeFactory', ($http) => {
+  .factory('SaveRecipeFactory', ($http, UserRecipe) => {
 
     return {
       save (recipe) {
-
-        return $http.post(`https://flavorize-front-end-capstone.firebaseio.com/recipes.json`, recipe)
+        const key = UserRecipe.getRecipeKey();
+        if (key === "") {
+          return $http.post(`https://flavorize-front-end-capstone.firebaseio.com/recipes.json`, recipe)
+        } else {
+          return $http.put(`https://flavorize-front-end-capstone.firebaseio.com/recipes/${key}.json`, recipe)
+        }
       }
     }
   })
@@ -96,7 +111,17 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       .then((response) => userHome.userRecipes = response);
 
     userHome.viewRecipe = function (recipe) {
+      // determines which unique firebase key belongs to the recipe selected
+      const recipesValues = Object.values(userHome.userRecipes);
+      const recipesKeys = Object.keys(userHome.userRecipes);
+      const index = recipesValues.indexOf(recipe);
+      const key = recipesKeys[index];
+
+      // sets the current recipe and its unique key from firebase
+      UserRecipe.setRecipeKey(key);
+
       UserRecipe.setRecipe(recipe);
+      // change to view recipe page
       $location.path('/viewRecipe');
     }
 
