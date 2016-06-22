@@ -82,7 +82,6 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
 
   .factory('SaveRecipeFactory', ($http, UserRecipe) => {
-
     return {
       save (recipe) {
         const key = UserRecipe.getRecipeKey();
@@ -107,6 +106,16 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       }
   })
 
+  .factory('USDAFactory', ($http) => {
+    return {
+      getUSDAIngredient (ingredient) {
+        const apiKey = "4H9cuHC4fIMlaTZgpPo0CClPGIm57pDalvQuiCPh";
+        return $http.get(`http://api.nal.usda.gov/ndb/search/?format=json&q=${ingredient}&sort=r&max=25&offset=0&api_key=${apiKey}`)
+          .then((res) => res.data.list.item);
+      },
+    }
+  })
+
 
 // ***************************** Controllers *****************************
 
@@ -120,7 +129,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
         .then(() => $location.path('/'))
     };
 
-    auth.register = function () {
+    auth.register = function (variable) {
       AuthFactory.register(auth.user.email, auth.user.password)
         .then(() => $location.path('/'))
         .catch(function(error) {

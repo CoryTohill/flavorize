@@ -1,6 +1,6 @@
 angular.module('app')
 
-  .controller('RecipeEditorCtrl', function (UserRecipe, FoodPairingFactory, SaveRecipeFactory, AuthFactory) {
+  .controller('RecipeEditorCtrl', function (UserRecipe, FoodPairingFactory, SaveRecipeFactory, AuthFactory, USDAFactory) {
     const recipeEditor = this;
     const uid = AuthFactory.getUser();
 
@@ -8,8 +8,12 @@ angular.module('app')
     recipeEditor.recipe.uid = uid;
     recipeEditor.searchedIngredients = [];
 
-    updatePairings();
+    // gets pairings on page load if there is at least 1 ingredient present
+    if (recipeEditor.recipe.ingredients[0]) {
+      updatePairings();
+    }
 
+    // USDAFactory.getUSDAIngredient("butter").then((data) => console.log('usda', data))
 
     // defines the default tab to display when switchen to recipeEditor route
     recipeEditor.viewTab = "Food Pairing";
@@ -22,7 +26,7 @@ angular.module('app')
 
 
     function updatePairings () {
-      console.log("update")
+      console.log("update PAIRINGS", recipeEditor.pairings)
       recipeEditor.pairings = [];
 
       FoodPairingFactory.suggestPairings()
