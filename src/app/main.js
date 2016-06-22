@@ -44,7 +44,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
 //**************************** Firebase Authorization *****************************
 
-  .factory('AuthFactory', ($timeout) => {
+  .factory('AuthFactory', ($timeout, $location) => {
     let currentUser = null;
 
     return {
@@ -62,8 +62,14 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
             currentUser = null;
           }, function(error) {
             // An error happened.
-            alert('Error Loggin Out');
+            alert('Error Logging Out');
           })
+        ))
+      },
+
+      register (email, password) {
+        return $timeout().then(() => (
+          firebase.auth().createUserWithEmailAndPassword(email, password)
         ))
       },
 
@@ -108,11 +114,22 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
   .controller('LoginCtrl', function (AuthFactory, $location) {
     const auth = this;
 
-    auth.login = function () {
+    auth.login = function (button) {
       AuthFactory.login(auth.user.email, auth.user.password)
         // .then((loginInfo) => auth.currentUser = loginInfo.uid)
         .then(() => $location.path('/'))
-    }
+    };
+
+    auth.register = function () {
+      AuthFactory.register(auth.user.email, auth.user.password)
+        .then(() => $location.path('/'))
+        .catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert(errorMessage);
+        })
+    };
 
   })
 
