@@ -1,0 +1,10 @@
+<div ng-controller="NavBarCtrl as navBar">
+
+  <a href="#/">Home</a>
+  <a href="#/userHome" ng-show="navBar.loggedIn">My Recipes</a>
+  <a href="#/recipeEditor" ng-click="navBar.newRecipe()" ng-show="navBar.loggedIn">New Recipe</a>
+
+  <a href="#/login" ng-show="!navBar.loggedIn">Login</a>
+  <a ng-click="navBar.logout()" ng-show="navBar.loggedIn">Logout</a>
+
+</div>

@@ -55,6 +55,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       },
 
       logout () {
+        console.log("logout")
        return $timeout().then(() => (
           firebase.auth().signOut().then(function() {
             // Sign-out successful.
@@ -88,6 +89,20 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     }
   })
 
+  .factory('AllRecipesFactory', ($timeout) => {
+    return {
+      getRecipes () {
+        return $timeout()
+          .then(() => firebase.database()
+                        .ref('/recipes')
+                        .once('value'))
+          .then(snap => snap.val())
+      }
+      }
+  })
+
+
+// ***************************** Controllers *****************************
 
 
   .controller('LoginCtrl', function (AuthFactory, $location) {
@@ -96,7 +111,22 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     auth.login = function () {
       AuthFactory.login(auth.user.email, auth.user.password)
         // .then((loginInfo) => auth.currentUser = loginInfo.uid)
-        .then(() => $location.path('/userHome'))
+        .then(() => $location.path('/'))
+    }
+
+  })
+
+  .controller('HomePageCtrl', function (AllRecipesFactory, UserRecipe, $location) {
+    const home = this;
+
+    // gets all recipes from firebase
+    AllRecipesFactory.getRecipes()
+      .then((response) => home.homeRecipes = response);
+
+    // sets the recipe to view before changing to viewRecipe page
+    home.viewRecipe = function (recipe) {
+      UserRecipe.setRecipe(recipe);
+      $location.path('/viewRecipe');
     }
 
   })
@@ -111,7 +141,8 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       .then((response) => userHome.userRecipes = response);
 
     userHome.newRecipe = function () {
-      console.log("clicked")
+      console.log("clicked");
+      UserRecipe.setRecipe({"ingredients": []});
       $location.path('/recipeEditor');
     }
 
@@ -132,12 +163,17 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
   })
 
+
   .controller('ViewRecipeCtrl', function (UserRecipe, $location) {
     const view = this;
-    const currentUser = firebase.auth().currentUser.uid;
+    let currentUser = null;
+
+    // determines if a user is logged in and gets the uid if they are
+    if (firebase.auth().currentUser) {
+      currentUser = firebase.auth().currentUser.uid;
+    }
 
     view.recipe = UserRecipe.getRecipe();
-    console.log("view",view.recipe)
 
     //shows or hides the edit recipe button based on which user is logged in
     if (currentUser === view.recipe.uid) {
@@ -151,3 +187,30 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     }
   })
 
+  .controller('NavBarCtrl', function (UserRecipe, $location, AuthFactory) {
+    const navBar = this;
+
+    // determines whether a user is logged in or out and shows appropriate nav bar options
+    function isUserLoggedIn () {
+      if (firebase.auth().currentUser) {
+        navBar.loggedIn =  true;
+      } else {
+        navBar.loggedIn = false;
+      }
+    }
+
+    // event listener that fires whenever a user logs in or out
+    firebase.auth().onAuthStateChanged(isUserLoggedIn);
+
+    navBar.newRecipe = function () {
+      // sets the viewed recipe to a new recipe
+      UserRecipe.setRecipe({"ingredients": []});
+      // forces page to reload if link is clicked while on page
+      $location.path('../#/recipeEditor');
+    }
+
+    navBar.logout = function () {
+      AuthFactory.logout()
+        .then(() => $location.path('/'))
+    }
+  })
