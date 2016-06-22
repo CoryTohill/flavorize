@@ -8,6 +8,8 @@ angular.module('app')
     recipeEditor.recipe.uid = uid;
     recipeEditor.searchedIngredients = [];
 
+    updatePairings();
+
 
     // defines the default tab to display when switchen to recipeEditor route
     recipeEditor.viewTab = "Food Pairing";
@@ -48,8 +50,9 @@ angular.module('app')
 
     // removes selected ingredient from user array
     recipeEditor.removeIngredient = function (ingredient) {
-      const index = recipeEditor.recipe.indexOf(ingredient);
-      recipeEditor.recipe.splice(index, 1);
+      console.log("r.r",recipeEditor.recipe)
+      const index = recipeEditor.recipe.ingredients.indexOf(ingredient);
+      recipeEditor.recipe.ingredients.splice(index, 1);
 
       // gets new suggestions if the deleted ingredient has a flavor profile selected other than ignore
       if (ingredient.flavorProfile && ingredient.flavorProfile !== "ignore") {
@@ -99,8 +102,14 @@ angular.module('app')
       };
     };
 
-    recipeEditor.saveRecipe = function (test) {
+    recipeEditor.saveRecipe = function () {
       SaveRecipeFactory.save(recipeEditor.recipe)
+        .then((response)=> {
+          // if it is a new save, the key is saved so any subsequent saves will update, not post new recipes
+          if (response.data.name) {
+            UserRecipe.setRecipeKey(response.data.name);
+          };
+        })
       console.log(recipeEditor.recipe);
     }
   })
