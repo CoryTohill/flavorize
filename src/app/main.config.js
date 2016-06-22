@@ -1,6 +1,11 @@
 angular.module('app')
   .config(($routeProvider) => (
     $routeProvider
+      .when('/', {
+        controller: 'HomePageCtrl',
+        controllerAs: 'home',
+        templateUrl: '/app/homePage.html'
+      })
       .when('/recipeEditor', {
         controller: 'RecipeEditorCtrl',
         controllerAs: 'recipeEditor',

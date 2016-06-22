@@ -89,7 +89,17 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     }
   })
 
-
+  .factory('AllRecipesFactory', ($timeout) => {
+    return {
+      getRecipes () {
+        return $timeout()
+          .then(() => firebase.database()
+                        .ref('/recipes')
+                        .once('value'))
+          .then(snap => snap.val())
+      }
+      }
+  })
 
   .controller('LoginCtrl', function (AuthFactory, $location) {
     const auth = this;
@@ -102,6 +112,21 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     auth.logout = function () {
       AuthFactory.logout()
         .then(() => $location.path('/'))
+    }
+
+  })
+
+  .controller('HomePageCtrl', function (AllRecipesFactory, UserRecipe, $location) {
+    const home = this;
+
+    // gets all recipes from firebase
+    AllRecipesFactory.getRecipes()
+      .then((response) => home.homeRecipes = response);
+
+    // sets the recipe to view before changing to viewRecipe page
+    home.viewRecipe = function (recipe) {
+      UserRecipe.setRecipe(recipe);
+      $location.path('/viewRecipe');
     }
 
   })
@@ -137,12 +162,17 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 
   })
 
+
   .controller('ViewRecipeCtrl', function (UserRecipe, $location) {
     const view = this;
-    const currentUser = firebase.auth().currentUser.uid;
+    let currentUser = null;
+
+    // determines if a user is logged in and gets the uid if they are
+    if (firebase.auth().currentUser) {
+      currentUser = firebase.auth().currentUser.uid;
+    }
 
     view.recipe = UserRecipe.getRecipe();
-    console.log("view",view.recipe)
 
     //shows or hides the edit recipe button based on which user is logged in
     if (currentUser === view.recipe.uid) {
