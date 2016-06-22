@@ -43,7 +43,6 @@ angular.module('app')
 
       } else {
         ingredient.flavorProfile = "ignore";
-        ingredient.flavorProfile.name = "ignore";
       }
       console.log("fin")
     }
@@ -51,8 +50,9 @@ angular.module('app')
 
     // removes selected ingredient from user array
     recipeEditor.removeIngredient = function (ingredient) {
-      const index = recipeEditor.recipe.indexOf(ingredient);
-      recipeEditor.recipe.splice(index, 1);
+      console.log("r.r",recipeEditor.recipe)
+      const index = recipeEditor.recipe.ingredients.indexOf(ingredient);
+      recipeEditor.recipe.ingredients.splice(index, 1);
 
       // gets new suggestions if the deleted ingredient has a flavor profile selected other than ignore
       if (ingredient.flavorProfile && ingredient.flavorProfile !== "ignore") {
