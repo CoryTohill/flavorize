@@ -55,6 +55,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       },
 
       logout () {
+        console.log("logout")
        return $timeout().then(() => (
           firebase.auth().signOut().then(function() {
             // Sign-out successful.
@@ -97,6 +98,10 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       AuthFactory.login(auth.user.email, auth.user.password)
         // .then((loginInfo) => auth.currentUser = loginInfo.uid)
         .then(() => $location.path('/userHome'))
+    }
+    auth.logout = function () {
+      AuthFactory.logout()
+        .then(() => $location.path('/'))
     }
 
   })
