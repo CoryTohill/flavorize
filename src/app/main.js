@@ -110,6 +110,11 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     UserRecipe.getUserRecipes(currentUser)
       .then((response) => userHome.userRecipes = response);
 
+    userHome.newRecipe = function () {
+      console.log("clicked")
+      $location.path('/recipeEditor');
+    }
+
     userHome.viewRecipe = function (recipe) {
       // determines which unique firebase key belongs to the recipe selected
       const recipesValues = Object.values(userHome.userRecipes);
