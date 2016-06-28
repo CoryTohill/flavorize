@@ -140,14 +140,23 @@ angular.module('app')
       } else {
         const ingredient = {};
 
-        ingredient.userIngredientName = ingredientName;
+        // if ingredient added has parenthesis, the text in the parenthesis is added to additional info
+        if (ingredientName.includes("(")) {
+          const startIndex = ingredientName.indexOf("(");
+          const endIndex = ingredientName.indexOf(")");
+          ingredient.userIngredientName = ingredientName.slice(0, startIndex - 1);
+          ingredient.additionalInfo = ingredientName.slice(startIndex + 1, endIndex);
+        } else {
+          ingredient.userIngredientName = ingredientName;
+        }
 
-        FoodPairingFactory.searchIngredients(ingredientName)
+
+        FoodPairingFactory.searchIngredients(ingredient.userIngredientName)
           .then((data) => {
             return ingredient.searchedIngredients = data;
           })
 
-        USDAFactory.searchUSDAIngredients(ingredientName)
+        USDAFactory.searchUSDAIngredients(ingredient.userIngredientName)
           .then((data) => ingredient.searchedUSDAIngredients = data)
 
         recipeEditor.recipe.ingredients.push(ingredient);
