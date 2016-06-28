@@ -1,1 +1,41 @@
-<h1>hello world</h1>
+
+<div>
+
+<!-- div displays the flavor profile selector inputs for each ingredient -->
+  <div class="col-sm-3">
+    <h3>Nutrition Profile:</h3>
+    <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
+
+    <div>
+
+      <select ng-model="ingredient.ndbno" ng-options="option.ndbno as option.name for option in ingredient.searchedUSDAIngredients" ng-change="recipeEditor.getNutritionInfo(ingredient)">
+        <!-- <option value=""></option> -->
+      </select>
+
+    </div>
+
+    </div>
+  </div>
+
+  <div class="col-sm-2">
+    <h3>USDA Units:</h3>
+    <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
+      <p>{{ingredient.nutritionProfile.USDAUnit}}</p>
+    </div>
+  </div>
+
+  <div class="col-sm-2">
+    <h3>Amount in Recipe:</h3>
+    <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
+      <input type="number" ng-model="ingredient.nutritionProfile.USDAAmount">
+    </div>
+  </div>
+
+  <div>
+    <h3>Nutrition Facts:</h3>
+    <h4>Per Recipe:</h4>
+
+    <h4>Per Serving:</h4>
+  </div>
+
+</div>

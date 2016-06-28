@@ -2,7 +2,7 @@
 
 <!-- div displays the flavor profile selector inputs for each ingredient -->
   <div class="col-sm-3">
-    <h1>Flavor Profile:</h1>
+    <h3>Flavor Profile:</h3>
     <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
       <div>
         <select ng-change="recipeEditor.addFlavorProfile(ingredient, selected)" ng-model="selected">
@@ -17,7 +17,7 @@
 
     <!-- div displays the suggested food pairings -->
     <div class="col-sm-6">
-      <h1>Suggested Pairings:</h1>
+      <h3>Suggested Pairings:</h3>
       <div ng-repeat="suggestion in recipeEditor.pairings" class="col-sm-4">
         <p>{{suggestion._links.ingredient.name}}</p>
         <img src="{{suggestion._links.ingredient._links.image.size_240}}" alt="{{suggestion._links.ingredient.name}}">

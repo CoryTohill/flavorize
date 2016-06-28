@@ -5,11 +5,8 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
 //**************************** User Recipe Object Factory *****************************
 
   .factory('UserRecipe', ($http, $timeout) => {
-    // will eventually be a call to firebase to get recipe info if editing a recipe
     let userRecipe = {"ingredients": []};
     let recipeKey = "";
-
-    console.log("userRecipe",userRecipe)
 
     return {
       getRecipe () {
@@ -40,6 +37,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       },
     }
   })
+
 
 
 //**************************** Firebase Authorization *****************************
@@ -94,6 +92,8 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     }
   })
 
+
+
   .factory('AllRecipesFactory', ($timeout) => {
     return {
       getRecipes () {
@@ -106,15 +106,25 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       }
   })
 
+
+
   .factory('USDAFactory', ($http) => {
+    const apiKey = "4H9cuHC4fIMlaTZgpPo0CClPGIm57pDalvQuiCPh";
+
     return {
-      getUSDAIngredient (ingredient) {
-        const apiKey = "4H9cuHC4fIMlaTZgpPo0CClPGIm57pDalvQuiCPh";
-        return $http.get(`http://api.nal.usda.gov/ndb/search/?format=json&q=${ingredient}&sort=r&max=25&offset=0&api_key=${apiKey}`)
-          .then((res) => res.data.list.item);
+      searchUSDAIngredients (ingredient) {
+        return $http.get(`http://api.nal.usda.gov/ndb/search/?format=json&q=${ingredient}&sort=r&max=25&offset=0&subset=1&api_key=${apiKey}`)
+          .then((response) => response.data.list.item);
       },
+      getNutritionInfo (ndbno) {
+        return $http.get(`http://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=${apiKey}&nutrients=205&nutrients=204&nutrients=208&nutrients=269&ndbno=${ndbno}`
+)         .then((response) => response.data.report.foods)
+      }
     }
   })
+
+
+
 
 
 // ***************************** Controllers *****************************
@@ -141,6 +151,9 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     };
 
   })
+
+
+
 
   .controller('HomePageCtrl', function (AllRecipesFactory, UserRecipe, $location) {
     const home = this;
@@ -172,22 +185,28 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       $location.path('/recipeEditor');
     }
 
-    userHome.viewRecipe = function (recipe) {
-      // determines which unique firebase key belongs to the recipe selected
+    userHome.editRecipe = function (recipe) {
       const recipesValues = Object.values(userHome.userRecipes);
       const recipesKeys = Object.keys(userHome.userRecipes);
       const index = recipesValues.indexOf(recipe);
       const key = recipesKeys[index];
 
-      // sets the current recipe and its unique key from firebase
       UserRecipe.setRecipeKey(key);
 
       UserRecipe.setRecipe(recipe);
+
+      $location.path('/recipeEditor')
+    }
+
+    userHome.viewRecipe = function (recipe) {
+      // determines which unique firebase key belongs to the recipe selected
+
       // change to view recipe page
       $location.path('/viewRecipe');
     }
 
   })
+
 
 
   .controller('ViewRecipeCtrl', function (UserRecipe, $location) {
@@ -208,10 +227,11 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       view.belongsToUser = false;
     };
 
-    view.editRecipe = function () {
-      $location.path('/recipeEditor')
-    }
+
   })
+
+
+
 
   .controller('NavBarCtrl', function (UserRecipe, $location, AuthFactory) {
     const navBar = this;

@@ -15,7 +15,7 @@
 <div class="container-fluid">
   <!-- div displays the ingredients chosen by user -->
     <div class="col-sm-3">
-      <h1>Ingredients:</h1>
+      <h3>Ingredients:</h3>
       <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
         <p>{{ingredient.userIngredientName}} <button ng-click="recipeEditor.removeIngredient(ingredient)">x</button></p>
       </div>
@@ -27,3 +27,4 @@
 <div ng-include="'/app/recipeEditor/recipe.html'" ng-show="recipeEditor.viewTab === 'Recipe'"></div>
 <div ng-include="'/app/recipeEditor/pairing.html'" ng-show="recipeEditor.viewTab === 'Food Pairing'"></div>
 <div ng-include="'/app/recipeEditor/nutrition.html'" ng-show="recipeEditor.viewTab === 'Nutrition'"></div>
+</div>

@@ -2,7 +2,8 @@ angular.module('app')
 
   .controller('RecipeEditorCtrl', function (UserRecipe, FoodPairingFactory, SaveRecipeFactory, AuthFactory, USDAFactory) {
     const recipeEditor = this;
-    const uid = AuthFactory.getUser();
+    const uid = firebase.auth().currentUser.uid;
+    const key = UserRecipe.getRecipeKey();
 
     recipeEditor.recipe = UserRecipe.getRecipe();
     recipeEditor.recipe.uid = uid;
@@ -13,20 +14,70 @@ angular.module('app')
       updatePairings();
     }
 
-    // USDAFactory.getUSDAIngredient("butter").then((data) => console.log('usda', data))
 
-    // defines the default tab to display when switchen to recipeEditor route
-    recipeEditor.viewTab = "Food Pairing";
-
+    // defines the default tab to display when switching to recipeEditor route
+    recipeEditor.viewTab = "Recipe";
     recipeEditor.tabs = ["Recipe", "Food Pairing", "Nutrition"];
+
+
+
+    // *************************** nutrition ************************************
+
+
+
 
     recipeEditor.changeTab = function (newTab) {
       recipeEditor.viewTab = newTab;
     };
 
 
+    // recipeEditor.addNutritionProfile = function (ingredient, selectedProfile) {
+    //   console.log("selected USDA profile: ", JSON.parse(selectedProfile))
+    //   // won't nutrition info if user chooses the ignore option unless profile was previously something else
+    //   if (selectedProfile !== "ignore") {
+    //     ingredient.nutritionProfile = JSON.parse(selectedProfile);
+    //     getNutritionInfo(ingredient.nutritionProfile);
+
+    //   } else if (ingredient.nutritionProfile) {
+    //     ingredient.nutritionProfile = selectedProfile;
+
+    //   } else {
+    //     ingredient.nutritionProfile = "ignore";
+    //   }
+    //   console.log("final ingredient: ", ingredient)
+    // // }
+    // nutrients
+    // }
+
+    recipeEditor.getNutritionInfo = function (ingredient) {
+      // console.log("NUT",ndbno)
+      ingredient.nutritionProfile = {};
+      console.log("INGR", ingredient)
+      USDAFactory.getNutritionInfo(ingredient.ndbno)
+        // .then((x) => console.log(x[0].name))
+        .then((response) => {
+          console.log("RESPONSE", response[0]);
+          if (response[0] === undefined) {
+            alert("No nutrional information available for selected ingredient, please choose the next best option.")
+            return ingredient;
+          } else {
+            ingredient.nutritionProfile.name = response[0].name;
+            ingredient.nutritionProfile.nutrients = response[0].nutrients;
+            ingredient.nutritionProfile.USDAUnit = response[0].measure;
+            return ingredient
+          }
+        })
+        .then((x) => console.log(x))
+    }
+
+
+
+
+
+
+
+
     function updatePairings () {
-      console.log("update PAIRINGS", recipeEditor.pairings)
       recipeEditor.pairings = [];
 
       FoodPairingFactory.suggestPairings()
@@ -35,7 +86,6 @@ angular.module('app')
 
 
     recipeEditor.addFlavorProfile = function (ingredient, selectedProfile) {
-      console.log("flavorProfile",ingredient)
       // won't update pairing suggestions if user chooses the ignore option unless profile was previously something else
       if (selectedProfile !== "ignore") {
         ingredient.flavorProfile = JSON.parse(selectedProfile);
@@ -48,13 +98,11 @@ angular.module('app')
       } else {
         ingredient.flavorProfile = "ignore";
       }
-      console.log("fin")
     }
 
 
     // removes selected ingredient from user array
     recipeEditor.removeIngredient = function (ingredient) {
-      console.log("r.r",recipeEditor.recipe)
       const index = recipeEditor.recipe.ingredients.indexOf(ingredient);
       recipeEditor.recipe.ingredients.splice(index, 1);
 
@@ -99,6 +147,9 @@ angular.module('app')
             return ingredient.searchedIngredients = data;
           })
 
+        USDAFactory.searchUSDAIngredients(ingredientName)
+          .then((data) => ingredient.searchedUSDAIngredients = data)
+
         recipeEditor.recipe.ingredients.push(ingredient);
 
         // resets the user text input
@@ -107,7 +158,7 @@ angular.module('app')
     };
 
     recipeEditor.saveRecipe = function () {
-      SaveRecipeFactory.save(recipeEditor.recipe)
+      SaveRecipeFactory.save(recipeEditor.recipe, key)
         .then((response)=> {
           // if it is a new save, the key is saved so any subsequent saves will update, not post new recipes
           if (response.data.name) {
