@@ -50,13 +50,10 @@ angular.module('app')
     // }
 
     recipeEditor.getNutritionInfo = function (ingredient) {
-      // console.log("NUT",ndbno)
       ingredient.nutritionProfile = {};
-      console.log("INGR", ingredient)
+
       USDAFactory.getNutritionInfo(ingredient.ndbno)
-        // .then((x) => console.log(x[0].name))
         .then((response) => {
-          console.log("RESPONSE", response[0]);
           if (response[0] === undefined) {
             alert("No nutrional information available for selected ingredient, please choose the next best option.")
             return ingredient;
@@ -67,13 +64,43 @@ angular.module('app')
             return ingredient
           }
         })
-        .then((x) => console.log(x))
     }
 
 
 
+    recipeEditor.updateNutritionValues = function () {
+      recipeEditor.recipe.sugar = 0;
+      recipeEditor.recipe.fat = 0;
+      recipeEditor.recipe.carbs = 0;
+      recipeEditor.recipe.calories = 0;
 
 
+      angular.forEach(recipeEditor.recipe.ingredients, function (ingredient) {
+        const USDAAmount = ingredient.nutritionProfile.USDAAmount;
+
+        angular.forEach(ingredient.nutritionProfile.nutrients, function (nutrient){
+
+          // determines what type of nutrient it is based on its nutrient_id,
+          // and adds the amount based on user input into the correct category
+          switch (nutrient.nutrient_id) {
+            case "269":
+              recipeEditor.recipe.sugar += Number(nutrient.value) * USDAAmount;
+              break;
+
+            case "204":
+              recipeEditor.recipe.fat += Number(nutrient.value) * USDAAmount;
+              break;
+
+            case "205":
+              recipeEditor.recipe.carbs += Number(nutrient.value) * USDAAmount;
+              break;
+
+            case "208":
+              recipeEditor.recipe.calories += Number(nutrient.value) * USDAAmount;
+          }
+        })
+      })
+    }
 
 
 
@@ -140,7 +167,8 @@ angular.module('app')
       } else {
         const ingredient = {};
 
-        // if ingredient added has parenthesis, the text in the parenthesis is added to additional info
+        // if ingredient added has parenthesis, only the text before the parenthesis is used,
+        // and the text in the parenthesis is added to additional info
         if (ingredientName.includes("(")) {
           const startIndex = ingredientName.indexOf("(");
           const endIndex = ingredientName.indexOf(")");

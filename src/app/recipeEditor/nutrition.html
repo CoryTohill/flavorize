@@ -5,15 +5,11 @@
   <div class="col-sm-3">
     <h3>Nutrition Profile:</h3>
     <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
-
-    <div>
-
-      <select ng-model="ingredient.ndbno" ng-options="option.ndbno as option.name for option in ingredient.searchedUSDAIngredients" ng-change="recipeEditor.getNutritionInfo(ingredient)">
-        <!-- <option value=""></option> -->
-      </select>
-
-    </div>
-
+      <div>
+        <select ng-model="ingredient.ndbno" ng-options="option.ndbno as option.name for option in ingredient.searchedUSDAIngredients" ng-change="recipeEditor.getNutritionInfo(ingredient)">
+          <option value="">Select the closest option</option>
+        </select>
+      </div>
     </div>
   </div>
 
@@ -27,13 +23,17 @@
   <div class="col-sm-2">
     <h3>Amount in Recipe:</h3>
     <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
-      <input type="number" ng-model="ingredient.nutritionProfile.USDAAmount">
+      <input type="number" ng-model="ingredient.nutritionProfile.USDAAmount" ng-change="recipeEditor.updateNutritionValues()">
     </div>
   </div>
 
   <div>
     <h3>Nutrition Facts:</h3>
     <h4>Per Recipe:</h4>
+    <p>Calories: {{recipeEditor.recipe.calories | number: 0}}</p>
+    <p>Fat: {{recipeEditor.recipe.fat | number: 0}} g</p>
+    <p>Carbohydrates: {{recipeEditor.recipe.carbs | number: 0}} g</p>
+    <p>Sugars: {{recipeEditor.recipe.sugar | number: 0}} g</p>
 
     <h4>Per Serving:</h4>
   </div>
