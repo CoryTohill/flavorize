@@ -31,24 +31,6 @@ angular.module('app')
     };
 
 
-    // recipeEditor.addNutritionProfile = function (ingredient, selectedProfile) {
-    //   console.log("selected USDA profile: ", JSON.parse(selectedProfile))
-    //   // won't nutrition info if user chooses the ignore option unless profile was previously something else
-    //   if (selectedProfile !== "ignore") {
-    //     ingredient.nutritionProfile = JSON.parse(selectedProfile);
-    //     getNutritionInfo(ingredient.nutritionProfile);
-
-    //   } else if (ingredient.nutritionProfile) {
-    //     ingredient.nutritionProfile = selectedProfile;
-
-    //   } else {
-    //     ingredient.nutritionProfile = "ignore";
-    //   }
-    //   console.log("final ingredient: ", ingredient)
-    // // }
-    // nutrients
-    // }
-
     recipeEditor.getNutritionInfo = function (ingredient) {
       ingredient.nutritionProfile = {};
 
@@ -100,8 +82,16 @@ angular.module('app')
           }
         })
       })
+      recipeEditor.updateNutritionValuesPerServing();
     }
 
+    recipeEditor.updateNutritionValuesPerServing = function () {
+      // calculates the nutrient values per serving
+      recipeEditor.recipe.sugarPerServing = recipeEditor.recipe.sugar / recipeEditor.recipe.servings;
+      recipeEditor.recipe.fatPerServing = recipeEditor.recipe.fat / recipeEditor.recipe.servings;
+      recipeEditor.recipe.carbsPerServing = recipeEditor.recipe.carbs / recipeEditor.recipe.servings;
+      recipeEditor.recipe.caloriesPerServing = recipeEditor.recipe.calories / recipeEditor.recipe.servings;
+    }
 
 
     function updatePairings () {

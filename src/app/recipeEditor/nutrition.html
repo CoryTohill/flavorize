@@ -29,6 +29,9 @@
 
   <div>
     <h3>Nutrition Facts:</h3>
+    <label for="servings">Servings:</label>
+    <input type="number" name="servings" ng-model="recipeEditor.recipe.servings" ng-change="recipeEditor.updateNutritionValuesPerServing()">
+
     <h4>Per Recipe:</h4>
     <p>Calories: {{recipeEditor.recipe.calories | number: 0}}</p>
     <p>Fat: {{recipeEditor.recipe.fat | number: 0}} g</p>
@@ -36,6 +39,11 @@
     <p>Sugars: {{recipeEditor.recipe.sugar | number: 0}} g</p>
 
     <h4>Per Serving:</h4>
+    <p>Calories: {{recipeEditor.recipe.caloriesPerServing | number: 0}}</p>
+    <p>Fat: {{recipeEditor.recipe.fatPerServing | number: 0}} g</p>
+    <p>Carbohydrates: {{recipeEditor.recipe.carbsPerServing | number: 0}} g</p>
+    <p>Sugars: {{recipeEditor.recipe.sugarPerServing | number: 0}} g</p>
+
   </div>
 
 </div>
