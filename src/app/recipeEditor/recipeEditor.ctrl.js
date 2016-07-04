@@ -1,6 +1,6 @@
 angular.module('app')
 
-  .controller('RecipeEditorCtrl', function (UserRecipe, FoodPairingFactory, SaveRecipeFactory, AuthFactory, USDAFactory) {
+  .controller('RecipeEditorCtrl', function (UserRecipe, FoodPairingFactory, SaveRecipeFactory, AuthFactory, USDAFactory, uploadFactory) {
     const recipeEditor = this;
     const uid = firebase.auth().currentUser.uid;
     const key = UserRecipe.getRecipeKey();
@@ -194,4 +194,37 @@ angular.module('app')
         })
       console.log(recipeEditor.recipe);
     }
+
+    recipeEditor.uploadImage = function () {
+      console.log("uploadimage")
+      const input = document.querySelector('[type="file"]')
+      const file = input.files[0]
+
+      const randomInteger = Math.random() * 1e17
+      const getFileExtension = file.type.split('/').slice(-1)[0]
+      const randomPath = `${randomInteger}.${getFileExtension}`
+
+      uploadFactory.send(file, randomPath)
+        .then(res => {
+          recipeEditor.recipe.photoURL = res.downloadURL;
+          return res.downloadURL
+        })
+    }
   })
+
+  .factory('uploadFactory', ($timeout) => ({
+    send (file, path = file.name) {
+      return $timeout().then(() => (
+        new Promise ((resolve, reject) => {
+          const uploadTask = firebase.storage().ref()
+            .child(path).put(file)
+
+          uploadTask.on('state_changed',
+            null,
+            reject,
+            () => resolve(uploadTask.snapshot)
+          )
+        })
+      ))
+    }
+  }))

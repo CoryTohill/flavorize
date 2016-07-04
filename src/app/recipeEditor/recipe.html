@@ -6,6 +6,15 @@
   <label for="recipeAuthor">Author:</label>
   <input type="text" id="recipeAuthor" ng-model="recipeEditor.recipe.author">
 
+  <label for="recipeImage">Recipe Image:</label>
+  <form ng-submit="recipeEditor.uploadImage()">
+    <input type="file" accept="image/*">
+    <input type="submit" value="Upload">
+  </form>
+
+  <div>
+    <img src="{{recipeEditor.recipe.photoURL}}">
+  </div>
 
   <div class="container">
     <div class="col-sm-4">
