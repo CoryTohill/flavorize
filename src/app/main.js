@@ -167,7 +167,6 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
       UserRecipe.setRecipe(recipe);
       $location.path('/viewRecipe');
     }
-
   })
 
 
@@ -199,8 +198,6 @@ angular.module('app', ['ngRoute', 'ui.bootstrap'])
     }
 
     userHome.viewRecipe = function (recipe) {
-      // determines which unique firebase key belongs to the recipe selected
-
       // change to view recipe page
       $location.path('/viewRecipe');
     }
