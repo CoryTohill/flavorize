@@ -1,17 +1,21 @@
 <div class="container">
-  <h1 class="col-sm-12">{{view.recipe.title}}</h1>
-  <h2 class="col-sm-12">By: {{view.recipe.author}}</h2>
-  <!-- picture will go here -->
-  <p class="col-sm-12">picture goes here</p>
+  <div class="col-sm-6">
+    <h1 class="col-sm-12">{{view.recipe.title}}</h1>
+    <h2 class="col-sm-12">By: {{view.recipe.author}}</h2>
+  </div>
+
+  <img src="{{view.recipe.photoURL}}" class="col-sm-6">
+
   <div class="col-sm-6">
     <h3>Ingredients:</h3>
     <div ng-repeat="ingredient in view.recipe.ingredients">
       <p>{{ingredient.amount}} {{ingredient.userIngredientName}} {{ingredient.additionalInfo}}</p>
     </div>
   </div>
+
   <div class="col-sm-6">
-    <h3 class="col-sm-12">Directions:</h3>
-    <p class="col-sm-12">{{view.recipe.directions}}</p>
+    <h3>Directions:</h3>
+    <p>{{view.recipe.directions}}</p>
   </div>
   <div class="col-sm-12" ng-show="view.recipe.calories">
     <h3>Nutritional Information:</h3>
