@@ -89,6 +89,7 @@ html,
 
 
 /************ Login Page ************/
+
 .login-input {
   max-width: 100%;
   margin: 20px 0;
@@ -104,7 +105,7 @@ html,
 
 .view-img {
   max-width: 100%;
-  max-height: 100%;
+  max-height: 400px;
   padding: 0;
   margin-top:10px;
   border-radius: 2em;

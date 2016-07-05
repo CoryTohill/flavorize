@@ -1,19 +1,17 @@
-<div class="container">
-  <h2>Pairings</h2>
-  <div ng-repeat="suggestion in recipeEditor.pairings"
-       ng-cloak="{{suggestion._links.ingredient._links.image.size_240}}">
-    <div class="col-xs-6 col-sm-4 col-md-3">
-      <div class="card suggestion-card">
-          <img class="img-responsive card-image suggestion-image"
-               src="{{suggestion._links.ingredient._links.image.size_240}}"
-               alt="{{suggestion._links.ingredient.name}}">
-          <h4 class="card-title">{{suggestion._links.ingredient.name}}</h4>
-        <button class="btn btn-primary btn-sm suggestion-button"
-                type="button"
-                ng-click="recipeEditor.addIngredient(suggestion._links.ingredient.name)"
-                >Add Ingredient
-        </button>
-      </div>
+<h2>Pairings</h2>
+<div ng-repeat="suggestion in recipeEditor.pairings"
+     ng-cloak="{{suggestion._links.ingredient._links.image.size_240}}">
+  <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="card suggestion-card">
+        <img class="img-responsive card-image suggestion-image"
+             src="{{suggestion._links.ingredient._links.image.size_240}}"
+             alt="{{suggestion._links.ingredient.name}}">
+        <h4 class="card-title">{{suggestion._links.ingredient.name}}</h4>
+      <button class="btn btn-primary btn-sm suggestion-button"
+              type="button"
+              ng-click="recipeEditor.addIngredient(suggestion._links.ingredient.name)"
+              >Add Ingredient
+      </button>
     </div>
   </div>
 </div>

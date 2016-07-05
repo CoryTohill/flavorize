@@ -1,50 +1,48 @@
-<div class="container">
-  <div class="form-group">
-    <label for="servings">Servings Per Recipe</label>
-    <input class="form-control number-input"
-           type="number"
-           name="servings"
-           ng-model="recipeEditor.recipe.servings"
-           ng-change="recipeEditor.updateNutritionValuesPerServing()">
-  </div>
+<div class="form-group">
+  <label for="servings">Servings Per Recipe</label>
+  <input class="form-control number-input"
+         type="number"
+         name="servings"
+         ng-model="recipeEditor.recipe.servings"
+         ng-change="recipeEditor.updateNutritionValuesPerServing()">
+</div>
 
-  <h2>Nutritional Information</h2>
+<h2>Nutritional Information</h2>
 
-  <div>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nutrient</th>
-          <th>Per Recipe</th>
-          <th ng-show="{{recipeEditor.recipe.caloriesPerServing}}">Per Serving</th>
-        </tr>
-      </thead>
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nutrient</th>
+        <th>Per Recipe</th>
+        <th ng-show="recipeEditor.recipe.servings">Per Serving</th>
+      </tr>
+    </thead>
 
-      <tbody>
-        <tr>
-          <td>Calories</td>
-          <td>{{recipeEditor.recipe.calories | number: 0}}</td>
-          <td ng-show="{{recipeEditor.recipe.caloriesPerServing}}">{{recipeEditor.recipe.caloriesPerServing | number: 0}}</td>
-        </tr>
+    <tbody>
+      <tr>
+        <td>Calories</td>
+        <td>{{recipeEditor.recipe.calories | number: 0}}</td>
+        <td ng-show="recipeEditor.recipe.servings">{{recipeEditor.recipe.caloriesPerServing | number: 0}}</td>
+      </tr>
 
-        <tr>
-          <td>Fat</td>
-          <td>{{recipeEditor.recipe.fat | number: 0}} g</td>
-          <td ng-show="{{recipeEditor.recipe.caloriesPerServing}}">{{recipeEditor.recipe.fatPerServing | number: 0}} g</td>
-        </tr>
+      <tr>
+        <td>Fat</td>
+        <td>{{recipeEditor.recipe.fat | number: 0}} g</td>
+        <td ng-show="recipeEditor.recipe.servings">{{recipeEditor.recipe.fatPerServing | number: 0}} g</td>
+      </tr>
 
-        <tr>
-          <td>Carbohydrates</td>
-          <td>{{recipeEditor.recipe.carbs | number: 0}} g</td>
-          <td ng-show="{{recipeEditor.recipe.caloriesPerServing}}">{{recipeEditor.recipe.carbsPerServing | number: 0}} g</td>
-        </tr>
+      <tr>
+        <td>Carbohydrates</td>
+        <td>{{recipeEditor.recipe.carbs | number: 0}} g</td>
+        <td ng-show="recipeEditor.recipe.servings">{{recipeEditor.recipe.carbsPerServing | number: 0}} g</td>
+      </tr>
 
-        <tr>
-          <td>Sugars</td>
-          <td>{{recipeEditor.recipe.sugar | number: 0}} g</td>
-          <td ng-show="{{recipeEditor.recipe.caloriesPerServing}}"  >{{recipeEditor.recipe.sugarPerServing | number: 0}} g</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <tr>
+        <td>Sugars</td>
+        <td>{{recipeEditor.recipe.sugar | number: 0}} g</td>
+        <td ng-show="recipeEditor.recipe.servings"  >{{recipeEditor.recipe.sugarPerServing | number: 0}} g</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
