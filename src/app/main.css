@@ -4,6 +4,8 @@
   box-sizing: border-box;
   border-radius: 5px;
   position: relative;
+  height: 320px;
+  text-align: center;
 }
 
 .card-image {
@@ -11,15 +13,42 @@
 }
 
 .card .card-title {
-  padding: 16px 32px 0px;
-}
-
-.card .card-author {
-  padding: 8px 32px 16px;
+  padding: 16px 0px 8px;
 }
 
 .edit-button {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  bottom: 8px;
+  right: 8px;
+}
+
+.suggestion-card {
+  height: 350px;
+}
+
+.suggestion-card {
+  text-align: center;
+}
+
+.suggestion-image {
+  height: 202.5px;
+}
+
+.suggestion-button {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form-control {
+  max-width: 300px;
+}
+
+.number-input {
+  max-width: 100px;
+}
+
+#directions {
+  max-width: 100%;
 }

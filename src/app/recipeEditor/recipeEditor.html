@@ -6,25 +6,227 @@
 
 <button ng-click="recipeEditor.saveRecipe()">Save Recipe</button>
 
-<!-- form for user manually adding ingredients -->
-  <form ng-submit="recipeEditor.addIngredient(recipeEditor.userText)">
-    <input ng-model="recipeEditor.userText" type="text">
-    <input type="submit" value="Add Ingredients">
-  </form>
 
-<div class="container-fluid">
-  <!-- div displays the ingredients chosen by user -->
-    <div class="col-sm-3">
-      <h3>Ingredients:</h3>
-      <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
-        <p>{{ingredient.userIngredientName}} <button ng-click="recipeEditor.removeIngredient(ingredient)">x</button></p>
+
+<!-- displays the table with columns based on the tab selected -->
+<div class="container">
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Ingredient</th>
+        <th ng-show="recipeEditor.viewTab === 'Recipe'">Amount</th>
+        <th ng-show="recipeEditor.viewTab === 'Recipe'">Additional Info</th>
+        <th ng-show="recipeEditor.viewTab === 'Food Pairing'">Flavor Profile</th>
+        <th ng-show="recipeEditor.viewTab === 'Nutrition'">Nutrition Profile</th>
+        <th ng-show="recipeEditor.viewTab === 'Nutrition'">USDA Units</th>
+        <th ng-show="recipeEditor.viewTab === 'Nutrition'">Amount in Recipe</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="ingredient in recipeEditor.recipe.ingredients">
+        <td>{{ingredient.userIngredientName}}
+          <button class="btn btn-xs btn-danger" ng-click="recipeEditor.removeIngredient(ingredient)">Remove</button>
+        </td>
+
+        <!-- ************ Recipe Columns ************ -->
+        <!-- Amount -->
+        <td class="form-group"
+            ng-show="recipeEditor.viewTab === 'Recipe'">
+          <input class="form-control"
+                 type="text"
+                 ng-model="ingredient.amount">
+        </td>
+
+        <!-- Additional Info -->
+        <td class="form-group"
+            ng-show="recipeEditor.viewTab === 'Recipe'">
+          <input class="form-control"
+                 type="text"
+                 ng-model="ingredient.additionalInfo">
+        </td>
+
+        <!-- ************ Pairing Columns ************ -->
+        <!-- Flavor Profile -->
+        <td ng-show="recipeEditor.viewTab === 'Food Pairing'"
+            class="form-group">
+          <select class="select-input form-control"
+                  ng-change="recipeEditor.addFlavorProfile(ingredient, selected)"
+                  ng-model="selected">
+            <option selected
+                    disabled
+                    value="">{{ingredient.flavorProfile.name}}</option>
+            <option ng-repeat="option in ingredient.searchedIngredients"
+                    value="{{option}}">{{option.name}}</option>
+            <option value="ignore">Ignore this Ingredient</option>
+          </select>
+        </td>
+
+        <!-- ************ Nutrition Columns ************ -->
+        <!-- Nutrition Profile -->
+        <td ng-show="recipeEditor.viewTab === 'Nutrition'"
+            class="form-group">
+          <select class="select-input form-control"
+                  ng-model="ingredient.ndbno"
+                  ng-options="option.ndbno as option.name for option in ingredient.searchedUSDAIngredients"
+                  ng-change="recipeEditor.getNutritionInfo(ingredient)">
+            <option value="">Select the closest option</option>
+          </select>
+        </td>
+
+        <!-- USDA Units -->
+        <td ng-show="recipeEditor.viewTab === 'Nutrition'">
+          <p>{{ingredient.nutritionProfile.USDAUnit}}</p>
+        </td>
+
+        <!-- Amount in Recipe -->
+        <td class="form-group"
+            ng-show="recipeEditor.viewTab === 'Nutrition'">
+          <input class="form-control number-input"
+                 type="number"
+                 ng-model="ingredient.nutritionProfile.USDAAmount"
+                 ng-change="recipeEditor.updateNutritionValues()">
+        </td>
+      </tr>
+
+      <!-- ************ Add Ingredient ************ -->
+      <tr>
+        <td>
+          <form class="form-group"
+                ng-submit="recipeEditor.addIngredient(recipeEditor.userText)">
+            <input class="form-control"
+                   ng-model="recipeEditor.userText"
+                   type="text"
+                   placeholder="Add Ingredient">
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ************ Recipe ************ -->
+<div class="container" ng-show="recipeEditor.viewTab === 'Recipe'">
+  <div class="col-sm-6 form-group">
+    <label for="recipeTitle">Recipe Title</label>
+    <input class="form-control"
+           type="text"
+           id="recipeTitle"
+           ng-model="recipeEditor.recipe.title">
+  </div>
+
+  <div class="col-sm-6 form-group">
+    <label for="recipeAuthor">Author</label>
+    <input class="form-control"
+           type="text"
+           id="recipeAuthor"
+           ng-model="recipeEditor.recipe.author">
+  </div>
+
+  <div class="col-xs-12">
+    <label for="recipeImage">Recipe Image</label>
+    <div>
+      <img src="{{recipeEditor.recipe.photoURL}}">
+    </div>
+    <form ng-submit="recipeEditor.uploadImage()">
+      <input type="file" accept="image/*">
+      <input class="btn btn-primary" type="submit" value="Upload">
+    </form>
+  </div>
+
+  <div class="form-group">
+    <h2>Directions</h2>
+    <textarea id="directions"
+              class="form-control col-lg-1"
+              rows="10"
+              ng-model="recipeEditor.recipe.directions">
+    </textarea>
+  </div>
+
+</div>
+
+
+
+<!-- ************ Food Pairing Results ************ -->
+<div class="container" ng-show="recipeEditor.viewTab === 'Food Pairing'">
+  <h2>Pairings</h2>
+  <div ng-repeat="suggestion in recipeEditor.pairings"
+       ng-cloak="{{suggestion._links.ingredient._links.image.size_240}}">
+    <div class="col-xs-6 col-sm-4 col-md-3">
+      <div class="card suggestion-card">
+          <img class="img-responsive card-image suggestion-image"
+               src="{{suggestion._links.ingredient._links.image.size_240}}"
+               alt="{{suggestion._links.ingredient.name}}">
+          <h4 class="card-title">{{suggestion._links.ingredient.name}}</h4>
+        <button class="btn btn-primary btn-sm suggestion-button"
+                type="button"
+                ng-click="recipeEditor.addIngredient(suggestion._links.ingredient.name)"
+                >Add Ingredient
+        </button>
       </div>
     </div>
+  </div>
+</div>
+
+
+<!-- ************ Nutrition Info ************ -->
+<div class="container" ng-show="recipeEditor.viewTab === 'Nutrition'">
+  <div class="form-group">
+    <label for="servings">Servings Per Recipe</label>
+    <input class="form-control number-input"
+           type="number"
+           name="servings"
+           ng-model="recipeEditor.recipe.servings"
+           ng-change="recipeEditor.updateNutritionValuesPerServing()">
+  </div>
+
+  <h2>Nutritional Information</h2>
+
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nutrient</th>
+          <th>Per Recipe</th>
+          <th ng-show="{{recipeEditor.recipe.caloriesPerServing}}">Per Serving</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Calories</td>
+          <td>{{recipeEditor.recipe.calories | number: 0}}</td>
+          <td ng-show="{{recipeEditor.recipe.caloriesPerServing}}">{{recipeEditor.recipe.caloriesPerServing | number: 0}}</td>
+        </tr>
+
+        <tr>
+          <td>Fat</td>
+          <td>{{recipeEditor.recipe.fat | number: 0}} g</td>
+          <td ng-show="{{recipeEditor.recipe.caloriesPerServing}}">{{recipeEditor.recipe.fatPerServing | number: 0}} g</td>
+        </tr>
+
+        <tr>
+          <td>Carbohydrates</td>
+          <td>{{recipeEditor.recipe.carbs | number: 0}} g</td>
+          <td ng-show="{{recipeEditor.recipe.caloriesPerServing}}">{{recipeEditor.recipe.carbsPerServing | number: 0}} g</td>
+        </tr>
+
+        <tr>
+          <td>Sugars</td>
+          <td>{{recipeEditor.recipe.sugar | number: 0}} g</td>
+          <td ng-show="{{recipeEditor.recipe.caloriesPerServing}}"  >{{recipeEditor.recipe.sugarPerServing | number: 0}} g</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 
 
 <!-- html pages to display base on what recipe editor navigation tab is selected -->
-<div ng-include="'/app/recipeEditor/recipe.html'" ng-show="recipeEditor.viewTab === 'Recipe'"></div>
+<!-- <div ng-include="'/app/recipeEditor/recipe.html'" ng-show="recipeEditor.viewTab === 'Recipe'"></div>
 <div ng-include="'/app/recipeEditor/pairing.html'" ng-show="recipeEditor.viewTab === 'Food Pairing'"></div>
 <div ng-include="'/app/recipeEditor/nutrition.html'" ng-show="recipeEditor.viewTab === 'Nutrition'"></div>
 </div>
+ -->
