@@ -6,13 +6,15 @@
         <a class="navbar-brand" href="#/">Flavorize</a>
       </div>
 
-      <div class="nav navbar-nav">
+      <ul class="nav navbar-nav">
         <li class="active"><a href="#/">Home</a></li>
         <li><a href="#/userHome" ng-show="navBar.loggedIn">My Recipes</a></li>
         <li><a href="#/recipeEditor" ng-click="navBar.newRecipe()" ng-show="navBar.loggedIn">New Recipe</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
         <li><a href="#/login" ng-show="!navBar.loggedIn">Login</a></li>
         <li><a ng-click="navBar.logout()" ng-show="navBar.loggedIn">Logout</a></li>
-      </div>
+      </ul>
 
     </div>
   </div>
