@@ -1,30 +1,121 @@
-<!-- recipe editor navigation tabs -->
-<a href="#/recipeEditor"
-  ng-click="recipeEditor.changeTab(tab)"
-  ng-repeat="tab in recipeEditor.tabs">
-  {{tab}}</a>
-
-<button ng-click="recipeEditor.saveRecipe()">Save Recipe</button>
-
-<!-- form for user manually adding ingredients -->
-  <form ng-submit="recipeEditor.addIngredient(recipeEditor.userText)">
-    <input ng-model="recipeEditor.userText" type="text">
-    <input type="submit" value="Add Ingredients">
-  </form>
-
-<div class="container-fluid">
-  <!-- div displays the ingredients chosen by user -->
-    <div class="col-sm-3">
-      <h3>Ingredients:</h3>
-      <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
-        <p>{{ingredient.userIngredientName}} <button ng-click="recipeEditor.removeIngredient(ingredient)">x</button></p>
-      </div>
+<!-- ************ Recipe Editor Tabs and Save Button ************ -->
+<div class="navbar navbar-default">
+    <div class="container">
+      <ul class="nav navbar-nav" ng-repeat="tab in recipeEditor.tabs">
+        <li ng-class="{ active: tab === recipeEditor.viewTab }">
+          <a ng-click="recipeEditor.changeTab(tab)" href="#/recipeEditor">{{tab}}</a>
+        </li>
+      </ul>
+      <button class="btn btn-primary navbar-btn navbar-right"
+              ng-click="recipeEditor.saveRecipe()"
+              >Save Recipe
+      </button>
     </div>
+  </div>
 
 
+<!-- ************ Ingredients Table ************ -->
+<!-- displays the table with columns based on the tab selected -->
+<div class="container recipeEditor-container table-responsive">
 
-<!-- html pages to display base on what recipe editor navigation tab is selected -->
-<div ng-include="'/app/recipeEditor/recipe.html'" ng-show="recipeEditor.viewTab === 'Recipe'"></div>
-<div ng-include="'/app/recipeEditor/pairing.html'" ng-show="recipeEditor.viewTab === 'Food Pairing'"></div>
-<div ng-include="'/app/recipeEditor/nutrition.html'" ng-show="recipeEditor.viewTab === 'Nutrition'"></div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Ingredient</th>
+        <th ng-show="recipeEditor.viewTab === 'Recipe'">Amount</th>
+        <th ng-show="recipeEditor.viewTab === 'Recipe'">Additional Info</th>
+        <th ng-show="recipeEditor.viewTab === 'Food Pairing'">Flavor Profile</th>
+        <th ng-show="recipeEditor.viewTab === 'Nutrition'">Nutrition Profile</th>
+        <th ng-show="recipeEditor.viewTab === 'Nutrition'">USDA Units</th>
+        <th ng-show="recipeEditor.viewTab === 'Nutrition'">Amount in Recipe</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="ingredient in recipeEditor.recipe.ingredients">
+        <td>{{ingredient.userIngredientName}}
+          <button class="btn btn-xs btn-danger" ng-click="recipeEditor.removeIngredient(ingredient)">Remove</button>
+        </td>
+
+        <!-- ************ Recipe Columns ************ -->
+        <!-- Amount -->
+        <td class="form-group"
+            ng-show="recipeEditor.viewTab === 'Recipe'">
+          <input class="form-control"
+                 type="text"
+                 ng-model="ingredient.amount">
+        </td>
+
+        <!-- Additional Info -->
+        <td class="form-group"
+            ng-show="recipeEditor.viewTab === 'Recipe'">
+          <input class="form-control"
+                 type="text"
+                 ng-model="ingredient.additionalInfo">
+        </td>
+
+        <!-- ************ Pairing Columns ************ -->
+        <!-- Flavor Profile -->
+        <td ng-show="recipeEditor.viewTab === 'Food Pairing'"
+            class="form-group">
+          <select class="select-input form-control"
+                  ng-change="recipeEditor.addFlavorProfile(ingredient, selected)"
+                  ng-model="selected">
+            <option selected
+                    disabled
+                    value="">{{ingredient.flavorProfile.name}}</option>
+            <option ng-repeat="option in ingredient.searchedIngredients"
+                    value="{{option}}">{{option.name}}</option>
+            <option value="ignore">Ignore this Ingredient</option>
+          </select>
+        </td>
+
+        <!-- ************ Nutrition Columns ************ -->
+        <!-- Nutrition Profile -->
+        <td ng-show="recipeEditor.viewTab === 'Nutrition'"
+            class="form-group">
+          <select class="select-input form-control"
+                  ng-model="ingredient.ndbno"
+                  ng-options="option.ndbno as option.name for option in ingredient.searchedUSDAIngredients"
+                  ng-change="recipeEditor.getNutritionInfo(ingredient)">
+            <option value="">Select the closest option</option>
+          </select>
+        </td>
+
+        <!-- USDA Units -->
+        <td ng-show="recipeEditor.viewTab === 'Nutrition'">
+          <p>{{ingredient.nutritionProfile.USDAUnit}}</p>
+        </td>
+
+        <!-- Amount in Recipe -->
+        <td class="form-group"
+            ng-show="recipeEditor.viewTab === 'Nutrition'">
+          <input class="form-control number-input"
+                 type="number"
+                 ng-model="ingredient.nutritionProfile.USDAAmount"
+                 ng-change="recipeEditor.updateNutritionValues()">
+        </td>
+      </tr>
+
+      <!-- ************ Add Ingredient ************ -->
+      <tr>
+        <td>
+          <form class="form-group"
+                ng-submit="recipeEditor.addIngredient(recipeEditor.userText)">
+            <input class="form-control"
+                   ng-model="recipeEditor.userText"
+                   type="text"
+                   placeholder="Add Ingredient">
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- html pages to display base on what recipe editor navigation tab is selected -->
+  <div ng-include="'/app/recipeEditor/recipe.html'" ng-show="recipeEditor.viewTab === 'Recipe'"></div>
+  <div ng-include="'/app/recipeEditor/pairing.html'" ng-show="recipeEditor.viewTab === 'Food Pairing'"></div>
+  <div ng-include="'/app/recipeEditor/nutrition.html'" ng-show="recipeEditor.viewTab === 'Nutrition'"></div>
 </div>
+

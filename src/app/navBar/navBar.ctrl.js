@@ -12,6 +12,10 @@ angular.module('app')
       }
     }
 
+    navBar.isActive = function (viewLocation) {
+        return viewLocation === $location.path();
+    };
+
     // event listener that fires whenever a user logs in or out
     firebase.auth().onAuthStateChanged(isUserLoggedIn);
 

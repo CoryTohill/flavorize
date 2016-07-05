@@ -26,6 +26,7 @@ angular.module('app')
     }
 
     userHome.viewRecipe = function (recipe) {
+      UserRecipe.setRecipe(recipe);
       // change to view recipe page
       $location.path('/viewRecipe');
     }

@@ -1,10 +1,20 @@
 <div ng-controller="NavBarCtrl as navBar">
+  <div class="navbar navbar-inverse">
+    <div class="container-fluid">
 
-  <a href="#/">Home</a>
-  <a href="#/userHome" ng-show="navBar.loggedIn">My Recipes</a>
-  <a href="#/recipeEditor" ng-click="navBar.newRecipe()" ng-show="navBar.loggedIn">New Recipe</a>
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#/">Flavorize</a>
+      </div>
 
-  <a href="#/login" ng-show="!navBar.loggedIn">Login</a>
-  <a ng-click="navBar.logout()" ng-show="navBar.loggedIn">Logout</a>
+      <ul class="nav navbar-nav">
+        <li ng-class="{ active: navBar.isActive('/')}"><a href="#/">Home</a></li>
+        <li ng-class="{ active: navBar.isActive('/userHome')}"><a href="#/userHome" ng-show="navBar.loggedIn">My Recipes</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-class="{ active: isActive('/login')}"><a href="#/login" ng-show="!navBar.loggedIn">Login</a></li>
+        <li><a ng-click="navBar.logout()" ng-show="navBar.loggedIn">Logout</a></li>
+      </ul>
 
+    </div>
+  </div>
 </div>

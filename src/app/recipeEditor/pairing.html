@@ -1,29 +1,17 @@
-<div>
-
-<!-- div displays the flavor profile selector inputs for each ingredient -->
-  <div class="col-sm-3">
-    <h3>Flavor Profile:</h3>
-    <div ng-repeat="ingredient in recipeEditor.recipe.ingredients">
-      <div>
-        <select ng-change="recipeEditor.addFlavorProfile(ingredient, selected)" ng-model="selected">
-          <option selected disabled value="">{{ingredient.flavorProfile.name}}</option>
-          <option ng-repeat="option in ingredient.searchedIngredients" value="{{option}}">{{option.name}}</option>
-          <option value="ignore">Ignore this Ingredient</option>
-        </select>
-      </div>
+<h2>Pairings</h2>
+<div ng-repeat="suggestion in recipeEditor.pairings"
+     ng-cloak="{{suggestion._links.ingredient._links.image.size_240}}">
+  <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="card suggestion-card">
+        <img class="img-responsive card-image suggestion-image"
+             src="{{suggestion._links.ingredient._links.image.size_240}}"
+             alt="{{suggestion._links.ingredient.name}}">
+        <h4 class="card-title">{{suggestion._links.ingredient.name}}</h4>
+      <button class="btn btn-primary btn-sm suggestion-button"
+              type="button"
+              ng-click="recipeEditor.addIngredient(suggestion._links.ingredient.name)"
+              >Add Ingredient
+      </button>
     </div>
   </div>
-
-
-    <!-- div displays the suggested food pairings -->
-    <div class="col-sm-6">
-      <h3>Suggested Pairings:</h3>
-      <div ng-repeat="suggestion in recipeEditor.pairings" class="col-sm-4">
-        <p>{{suggestion._links.ingredient.name}}</p>
-        <img src="{{suggestion._links.ingredient._links.image.size_240}}" alt="{{suggestion._links.ingredient.name}}">
-        <button type="button" ng-click="recipeEditor.addIngredient(suggestion._links.ingredient.name)">Add Ingredient</button>
-      </div>
-    </div>
-  </div>
-
 </div>
