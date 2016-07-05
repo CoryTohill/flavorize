@@ -1,4 +1,5 @@
 angular.module('app')
+
   .factory('FoodPairingFactory', ($http, UserRecipe) => {
     return {
       searchIngredients (ingredient) {

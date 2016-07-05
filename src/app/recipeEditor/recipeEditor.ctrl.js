@@ -192,11 +192,9 @@ angular.module('app')
             UserRecipe.setRecipeKey(response.data.name);
           };
         })
-      console.log(recipeEditor.recipe);
     }
 
     recipeEditor.uploadImage = function () {
-      console.log("uploadimage")
       const input = document.querySelector('[type="file"]')
       const file = input.files[0]
 
@@ -212,19 +210,3 @@ angular.module('app')
     }
   })
 
-  .factory('uploadFactory', ($timeout) => ({
-    send (file, path = file.name) {
-      return $timeout().then(() => (
-        new Promise ((resolve, reject) => {
-          const uploadTask = firebase.storage().ref()
-            .child(path).put(file)
-
-          uploadTask.on('state_changed',
-            null,
-            reject,
-            () => resolve(uploadTask.snapshot)
-          )
-        })
-      ))
-    }
-  }))
