@@ -1,6 +1,7 @@
-<button ng-click="userHome.newRecipe()">New Recipe</button>
 
 <div class="container">
+<button class="btn btn-lg btn-primary center-block new-recipe-btn"
+        ng-click="userHome.newRecipe()">New Recipe</button>
   <div ng-repeat="recipe in userHome.userRecipes">
     <div class="col-sm-4 col-md-3">
       <div class="card">

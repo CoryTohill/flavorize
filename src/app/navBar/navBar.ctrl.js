@@ -13,7 +13,6 @@ angular.module('app')
     }
 
     navBar.isActive = function (viewLocation) {
-      console.log("active")
         return viewLocation === $location.path();
     };
 

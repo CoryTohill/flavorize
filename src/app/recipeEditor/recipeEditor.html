@@ -16,7 +16,7 @@
 
 <!-- ************ Ingredients Table ************ -->
 <!-- displays the table with columns based on the tab selected -->
-<div class="container">
+<div class="container recipeEditor-container">
 
   <table class="table">
     <thead>
@@ -111,12 +111,11 @@
       </tr>
     </tbody>
   </table>
-</div>
 
 
-<!-- html pages to display base on what recipe editor navigation tab is selected -->
-<div ng-include="'/app/recipeEditor/recipe.html'" ng-show="recipeEditor.viewTab === 'Recipe'"></div>
-<div ng-include="'/app/recipeEditor/pairing.html'" ng-show="recipeEditor.viewTab === 'Food Pairing'"></div>
-<div ng-include="'/app/recipeEditor/nutrition.html'" ng-show="recipeEditor.viewTab === 'Nutrition'"></div>
+  <!-- html pages to display base on what recipe editor navigation tab is selected -->
+  <div ng-include="'/app/recipeEditor/recipe.html'" ng-show="recipeEditor.viewTab === 'Recipe'"></div>
+  <div ng-include="'/app/recipeEditor/pairing.html'" ng-show="recipeEditor.viewTab === 'Food Pairing'"></div>
+  <div ng-include="'/app/recipeEditor/nutrition.html'" ng-show="recipeEditor.viewTab === 'Nutrition'"></div>
 </div>
 

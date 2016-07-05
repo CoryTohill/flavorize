@@ -1,3 +1,30 @@
+/************ General Site Styles ************/
+
+html,
+.ngview {
+  background-color: #00bf94;
+  background-size: cover;
+}
+
+.navbar {
+  margin: 0;
+  border-radius: 0;
+}
+
+.recipeEditor-container,
+.view-container {
+  background-color: whitesmoke;
+  background-size: cover;
+}
+
+.new-recipe-btn {
+  margin-top: 15px;
+}
+
+
+
+/************ Card Styles ************/
+
 .card {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   margin-top: 10px;
@@ -6,10 +33,12 @@
   position: relative;
   height: 320px;
   text-align: center;
+  background-color: white;
 }
 
 .card-image {
   border-radius: 5px 5px 0 0;
+  width: 100%;
 }
 
 .card .card-title {
@@ -41,6 +70,10 @@
   transform: translate(-50%, -50%);
 }
 
+
+
+/************ Inputs/Forms ************/
+
 .form-control {
   max-width: 300px;
 }
@@ -51,4 +84,28 @@
 
 #directions {
   max-width: 100%;
+}
+
+
+
+/************ Login Page ************/
+.login-input {
+  max-width: 100%;
+  margin: 20px 0;
+}
+
+.auth-btn {
+  width: 100%;
+}
+
+
+
+/************ View Recipe Page ************/
+
+.view-img {
+  max-width: 100%;
+  max-height: 100%;
+  padding: 0;
+  margin-top:10px;
+  border-radius: 2em;
 }
