@@ -3,6 +3,7 @@
   margin-top: 10px;
   box-sizing: border-box;
   border-radius: 5px;
+  position: relative;
 }
 
 .card-image {
@@ -15,4 +16,10 @@
 
 .card .card-author {
   padding: 8px 32px 16px;
+}
+
+.edit-button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }
