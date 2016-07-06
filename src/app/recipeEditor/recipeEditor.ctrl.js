@@ -61,24 +61,26 @@ angular.module('app')
         const USDAAmount = ingredient.nutritionProfile.USDAAmount;
 
         angular.forEach(ingredient.nutritionProfile.nutrients, function (nutrient){
+          if (ingredient.nutritionProfile.USDAAmount) {
 
-          // determines what type of nutrient it is based on its nutrient_id,
-          // and adds the amount based on user input into the correct category
-          switch (nutrient.nutrient_id) {
-            case "269":
-              recipeEditor.recipe.sugar += Number(nutrient.value) * USDAAmount;
-              break;
+            // determines what type of nutrient it is based on its nutrient_id,
+            // and adds the amount based on user input into the correct category
+            switch (nutrient.nutrient_id) {
+              case "269":
+                recipeEditor.recipe.sugar += Number(nutrient.value) * USDAAmount;
+                break;
 
-            case "204":
-              recipeEditor.recipe.fat += Number(nutrient.value) * USDAAmount;
-              break;
+              case "204":
+                recipeEditor.recipe.fat += Number(nutrient.value) * USDAAmount;
+                break;
 
-            case "205":
-              recipeEditor.recipe.carbs += Number(nutrient.value) * USDAAmount;
-              break;
+              case "205":
+                recipeEditor.recipe.carbs += Number(nutrient.value) * USDAAmount;
+                break;
 
-            case "208":
-              recipeEditor.recipe.calories += Number(nutrient.value) * USDAAmount;
+              case "208":
+                recipeEditor.recipe.calories += Number(nutrient.value) * USDAAmount;
+            }
           }
         })
       })

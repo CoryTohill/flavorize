@@ -14,7 +14,7 @@ angular.module('app')
       UserRecipe.setRecipeKey("");
 
       $location.path('/recipeEditor');
-    }
+    };
 
     userHome.editRecipe = function (recipe) {
       // determines the unique firebase key for the recipe selected
@@ -27,8 +27,8 @@ angular.module('app')
 
       UserRecipe.setRecipe(recipe);
 
-      $location.path('/recipeEditor')
-    }
+      $location.path('/recipeEditor');
+    };
 
     userHome.deleteRecipe = function (recipe) {
       // determines the unique firebase key for the recipe selected
@@ -41,12 +41,12 @@ angular.module('app')
         // updates the recipes on the current page after the selected recipe is deleted
         .then(() => UserRecipe.getUserRecipes(currentUser))
         .then((response) => userHome.userRecipes = response);
-    }
+    };
 
     userHome.viewRecipe = function (recipe) {
       UserRecipe.setRecipe(recipe);
       // change to view recipe page
       $location.path('/viewRecipe');
-    }
+    };
 
-  })
+  });

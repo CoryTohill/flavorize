@@ -28,7 +28,7 @@ angular.module('app')
                         .orderByChild('uid')
                         .equalTo(uid)
                         .once('value'))
-          .then(snap => snap.val())
-      },
-    }
-  })
+          .then(snap => snap.val());
+      }
+    };
+  });
