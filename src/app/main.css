@@ -39,6 +39,7 @@ html,
 .card-image {
   border-radius: 5px 5px 0 0;
   width: 100%;
+  max-height: 185px;
 }
 
 .card .card-title {
@@ -46,6 +47,12 @@ html,
 }
 
 .edit-button {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+}
+
+.delete-button {
   position: absolute;
   bottom: 8px;
   right: 8px;
