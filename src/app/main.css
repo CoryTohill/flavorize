@@ -48,6 +48,12 @@ html,
 .edit-button {
   position: absolute;
   bottom: 8px;
+  left: 8px;
+}
+
+.delete-button {
+  position: absolute;
+  bottom: 8px;
   right: 8px;
 }
 
