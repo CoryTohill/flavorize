@@ -42,3 +42,7 @@ From the home page, users can see recipes saved by all users. If a recipe is cli
     * User can then type in the amount of ingredient in the recipe based on the USDA units provided
     * The calories, sugars, fats, carbohydrates per recipe will then be displayed/updated dynamically
     * Users can input the number of servings per recipe, which will also dynamically show the nutrition data per serving
+
+### APIs Used
+* [Foodpairing](http://developer.foodpairing.com/)
+* [National Nutrient Database for Standard Reference Release 28](https://ndb.nal.usda.gov/ndb/api/doc#)
