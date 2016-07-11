@@ -24,10 +24,10 @@ angular.module('app')
       UserRecipe.setRecipe({"ingredients": []});
       // forces page to reload if link is clicked while on page
       $location.path('../#/recipeEditor');
-    }
+    };
 
     navBar.logout = function () {
       AuthFactory.logout()
-        .then(() => $location.path('/'))
-    }
-  })
+        .then(() => $location.path('/'));
+    };
+  });

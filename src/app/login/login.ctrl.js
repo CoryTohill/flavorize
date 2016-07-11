@@ -7,6 +7,12 @@ angular.module('app')
       AuthFactory.login(auth.user.email, auth.user.password)
         // .then((loginInfo) => auth.currentUser = loginInfo.uid)
         .then(() => $location.path('/'))
+        .catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert(errorMessage);
+        });
     };
 
     auth.register = function (variable) {
@@ -17,7 +23,6 @@ angular.module('app')
           var errorCode = error.code;
           var errorMessage = error.message;
           alert(errorMessage);
-        })
+        });
     };
-
-  })
+  });

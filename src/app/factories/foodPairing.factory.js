@@ -21,9 +21,9 @@ angular.module('app')
         // gets all food ids from user ingredients object if they have a flavor profile that isn't ignored
         recipe.ingredients.forEach(function (ingredient) {
           if (ingredient.flavorProfile && ingredient.flavorProfile !== 'ignore') {
-            userIngredientIds.push(ingredient.flavorProfile.id)
+            userIngredientIds.push(ingredient.flavorProfile.id);
           }
-        })
+        });
 
         // format the ingredient Ids into a string with commas between values
         userIngredientIds = userIngredientIds.join();
@@ -39,4 +39,4 @@ angular.module('app')
         return $http(pairingRequest).then((response) => data = response.data);
       }
     };
-  })
+  });

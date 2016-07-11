@@ -10,7 +10,7 @@ angular.module('app')
       },
       getNutritionInfo (ndbno) {
         return $http.get(`http://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=${apiKey}&nutrients=205&nutrients=204&nutrients=208&nutrients=269&ndbno=${ndbno}`)
-          .then((response) => response.data.report.foods)
+          .then((response) => response.data.report.foods);
       }
-    }
-  })
+    };
+  });
