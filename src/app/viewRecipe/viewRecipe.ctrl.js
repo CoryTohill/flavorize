@@ -16,6 +16,5 @@ angular.module('app')
       view.belongsToUser = true;
     } else {
       view.belongsToUser = false;
-    };
-
-  })
+    }
+  });

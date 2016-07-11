@@ -7,7 +7,7 @@ angular.module('app')
           .then(() => firebase.database()
                         .ref('/recipes')
                         .once('value'))
-          .then(snap => snap.val())
+          .then(snap => snap.val());
       }
-      }
-  })
+    };
+  });

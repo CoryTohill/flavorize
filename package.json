@@ -4,6 +4,7 @@
   "description": "Front-end capstone project for Nashville Software School",
   "main": "index.js",
   "scripts": {
+    "postinstall":"bower install",
     "build": "gulp build",
     "serve": "gulp watch",
     "start": "npm run build && http-server dist",

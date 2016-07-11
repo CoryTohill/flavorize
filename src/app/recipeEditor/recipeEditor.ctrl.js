@@ -37,16 +37,16 @@ angular.module('app')
       USDAFactory.getNutritionInfo(ingredient.ndbno)
         .then((response) => {
           if (response[0] === undefined) {
-            alert("No nutrional information available for selected ingredient, please choose the next best option.")
+            alert("No nutrional information available for selected ingredient, please choose the next best option.");
             return ingredient;
           } else {
             ingredient.nutritionProfile.name = response[0].name;
             ingredient.nutritionProfile.nutrients = response[0].nutrients;
             ingredient.nutritionProfile.USDAUnit = response[0].measure;
-            return ingredient
+            return ingredient;
           }
-        })
-    }
+        });
+    };
 
 
 
@@ -82,10 +82,10 @@ angular.module('app')
                 recipeEditor.recipe.calories += Number(nutrient.value) * USDAAmount;
             }
           }
-        })
-      })
+        });
+      });
       recipeEditor.updateNutritionValuesPerServing();
-    }
+    };
 
     recipeEditor.updateNutritionValuesPerServing = function () {
       // calculates the nutrient values per serving
@@ -93,7 +93,7 @@ angular.module('app')
       recipeEditor.recipe.fatPerServing = recipeEditor.recipe.fat / recipeEditor.recipe.servings;
       recipeEditor.recipe.carbsPerServing = recipeEditor.recipe.carbs / recipeEditor.recipe.servings;
       recipeEditor.recipe.caloriesPerServing = recipeEditor.recipe.calories / recipeEditor.recipe.servings;
-    }
+    };
 
 
     function updatePairings () {
@@ -117,7 +117,7 @@ angular.module('app')
       } else {
         ingredient.flavorProfile = "ignore";
       }
-    }
+    };
 
 
     // removes selected ingredient from user array
@@ -131,9 +131,9 @@ angular.module('app')
 
         FoodPairingFactory.suggestPairings()
           .then((data) => {
-            recipeEditor.pairings = data
-        })
-      };
+            recipeEditor.pairings = data;
+        });
+      }
     };
 
 
@@ -141,14 +141,14 @@ angular.module('app')
     recipeEditor.searchIngredients = function (ingredient) {
       // prevents user from searching without entering text
       if (ingredient === ('' || 'undefined')) {
-        alert("Search field must not be blank")
+        alert("Search field must not be blank");
       } else {
         recipeEditor.recipe.ingredients.userIngredientName = ingredient;
         FoodPairingFactory.searchIngredients(ingredient)
           .then((data) => {
             return recipeEditor.recipe.ingredients.searchedIngredients = data;
           });
-      };
+      }
     };
 
 
@@ -174,16 +174,16 @@ angular.module('app')
         FoodPairingFactory.searchIngredients(ingredient.userIngredientName)
           .then((data) => {
             return ingredient.searchedIngredients = data;
-          })
+          });
 
         USDAFactory.searchUSDAIngredients(ingredient.userIngredientName)
-          .then((data) => ingredient.searchedUSDAIngredients = data)
+          .then((data) => ingredient.searchedUSDAIngredients = data);
 
         recipeEditor.recipe.ingredients.push(ingredient);
 
         // resets the user text input
         recipeEditor.userText = '';
-      };
+      }
     };
 
     recipeEditor.saveRecipe = function () {
@@ -192,23 +192,22 @@ angular.module('app')
           // if it is a new save, the key is saved so any subsequent saves will update, not post new recipes
           if (response.data.name) {
             UserRecipe.setRecipeKey(response.data.name);
-          };
-        })
-    }
+          }
+        });
+    };
 
     recipeEditor.uploadImage = function () {
-      const input = document.querySelector('[type="file"]')
-      const file = input.files[0]
+      const input = document.querySelector('[type="file"]');
+      const file = input.files[0];
 
-      const randomInteger = Math.random() * 1e17
-      const getFileExtension = file.type.split('/').slice(-1)[0]
-      const randomPath = `${randomInteger}.${getFileExtension}`
+      const randomInteger = Math.random() * 1e17;
+      const getFileExtension = file.type.split('/').slice(-1)[0];
+      const randomPath = `${randomInteger}.${getFileExtension}`;
 
       uploadFactory.send(file, randomPath)
         .then(res => {
           recipeEditor.recipe.photoURL = res.downloadURL;
-          return res.downloadURL
-        })
-    }
-  })
-
+          return res.downloadURL;
+        });
+    };
+  });

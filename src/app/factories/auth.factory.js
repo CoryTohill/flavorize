@@ -19,17 +19,17 @@ angular.module('app')
             // An error happened.
             alert('Error Logging Out');
           })
-        ))
+        ));
       },
 
       register (email, password) {
         return $timeout().then(() => (
           firebase.auth().createUserWithEmailAndPassword(email, password)
-        ))
+        ));
       },
 
       getUser () {
         return currentUser;
       }
     };
-  })
+  });

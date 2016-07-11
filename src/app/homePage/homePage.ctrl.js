@@ -11,5 +11,5 @@ angular.module('app')
     home.viewRecipe = function (recipe) {
       UserRecipe.setRecipe(recipe);
       $location.path('/viewRecipe');
-    }
-  })
+    };
+  });

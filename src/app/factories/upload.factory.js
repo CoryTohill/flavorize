@@ -5,14 +5,14 @@ angular.module('app')
       return $timeout().then(() => (
         new Promise ((resolve, reject) => {
           const uploadTask = firebase.storage().ref()
-            .child(path).put(file)
+            .child(path).put(file);
 
           uploadTask.on('state_changed',
             null,
             reject,
             () => resolve(uploadTask.snapshot)
-          )
+          );
         })
-      ))
+      ));
     }
-  }))
+  }));
