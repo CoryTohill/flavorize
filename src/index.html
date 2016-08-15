@@ -2,47 +2,47 @@
 <html>
   <head>
     <title>Flavorize</title>
-    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/app/main.css">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="app/main.css">
   </head>
   <body>
     <div ng-app="app">
-      <div ng-include="'/app/navBar/navBar.html'" class="mainNavBar"></div>
+      <div ng-include="'app/navBar/navBar.html'" class="mainNavBar"></div>
         <div ng-view class="ngview"></div>
     </div>
 
 
     <!-- ************ Script Tags ************ -->
     <!-- lib  -->
-    <script src="/lib/angular/angular.min.js" type="text/javascript"></script>
-    <script src="/lib/angular-bootstrap/ui-bootstrap.min.js" type="text/javascript"></script>
-    <script src="/lib/angular-route/angular-route.min.js" type="text/javascript"></script>
-    <script src="/lib/firebase/firebase.js" type="text/javascript"></script>
+    <script src="lib/angular/angular.min.js" type="text/javascript"></script>
+    <script src="lib/angular-bootstrap/ui-bootstrap.min.js" type="text/javascript"></script>
+    <script src="ib/angular-route/angular-route.min.js" type="text/javascript"></script>
+    <script src="lib/firebase/firebase.js" type="text/javascript"></script>
 
     <!-- initial app  -->
-    <script src="/app/main.js" type="text/javascript"></script>
-    <script src="/app/initializeFirebase.js" type="text/javascript"></script>
+    <script src="app/main.js" type="text/javascript"></script>
+    <script src="app/initializeFirebase.js" type="text/javascript"></script>
 
     <!-- config -->
-    <script src="/app/main.config.js" type="text/javascript"></script>
+    <script src="app/main.config.js" type="text/javascript"></script>
 
     <!-- factories -->
-    <script src="/app/factories/auth.factory.js" type="text/javascript"></script>
-    <script src="/app/factories/allRecipes.factory.js" type="text/javascript"></script>
-    <script src="/app/factories/userRecipe.factory.js" type="text/javascript"></script>
-    <script src="/app/factories/foodPairing.factory.js" type="text/javascript"></script>
-    <script src="/app/factories/saveRecipe.factory.js" type="text/javascript"></script>
-    <script src="/app/factories/upload.factory.js" type="text/javascript"></script>
-    <script src="/app/factories/USDA.factory.js" type="text/javascript"></script>
-    <script src="/app/factories/deleteRecipe.factory.js" type="text/javascript"></script>
+    <script src="app/factories/auth.factory.js" type="text/javascript"></script>
+    <script src="app/factories/allRecipes.factory.js" type="text/javascript"></script>
+    <script src="app/factories/userRecipe.factory.js" type="text/javascript"></script>
+    <script src="app/factories/foodPairing.factory.js" type="text/javascript"></script>
+    <script src="app/factories/saveRecipe.factory.js" type="text/javascript"></script>
+    <script src="app/factories/upload.factory.js" type="text/javascript"></script>
+    <script src="app/factories/USDA.factory.js" type="text/javascript"></script>
+    <script src="app/factories/deleteRecipe.factory.js" type="text/javascript"></script>
 
     <!-- controllers -->
-    <script src="/app/recipeEditor/recipeEditor.ctrl.js" type="text/javascript"></script>
-    <script src="/app/login/login.ctrl.js" type="text/javascript"></script>
-    <script src="/app/userHome/userHome.ctrl.js" type="text/javascript"></script>
-    <script src="/app/homePage/homePage.ctrl.js" type="text/javascript"></script>
-    <script src="/app/viewRecipe/viewRecipe.ctrl.js" type="text/javascript"></script>
-    <script src="/app/navBar/navBar.ctrl.js" type="text/javascript"></script>
+    <script src="app/recipeEditor/recipeEditor.ctrl.js" type="text/javascript"></script>
+    <script src="app/login/login.ctrl.js" type="text/javascript"></script>
+    <script src="app/userHome/userHome.ctrl.js" type="text/javascript"></script>
+    <script src="app/homePage/homePage.ctrl.js" type="text/javascript"></script>
+    <script src="app/viewRecipe/viewRecipe.ctrl.js" type="text/javascript"></script>
+    <script src="app/navBar/navBar.ctrl.js" type="text/javascript"></script>
 
   </body>
 </html>
