@@ -1,6 +1,6 @@
 #! /bin/sh
 git checkout -b gh-temp
-gulp dist
+gulp build
 echo '!dist' > .gitignore
 git add -A
 git commit -m "lib for gh-pages"
