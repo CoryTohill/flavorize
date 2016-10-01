@@ -2,19 +2,56 @@
 
 html,
 .ngview {
-  background-color: #00bf94;
+  /*background-color: #00bf94;*/
+  background-image: url("light-wood.jpg");
   background-size: cover;
 }
 
 .navbar {
   margin: 0;
   border-radius: 0;
+  background-color: #6b4423;
+  border: none;
+}
+
+
+.navbarText {
+  color: #e0cda7;
+}
+
+/*.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus
+*/
+.navbar-nav li a:active,
+.navbar-nav li a:hover,
+.navbar-nav li a:focus{
+  background-color: #ac8f57;
+  color: #6b4423;
+}
+
+
+
+
+.panel {
+  margin-top: 10vh;
+  border-color: #B73E18;
+  box-shadow: 20px 20px 20px;
+}
+
+.panel-heading {
+  background-color: #B73E18;
+}
+
+.panel-body {
+  /*background-color: lightblue;*/
+  background-image: url("paper.jpg");
+  background-size: cover;
 }
 
 .recipeEditor-container,
 .view-container {
-  background-color: whitesmoke;
-  background-size: cover;
+  /*background-color: whitesmoke;*/
+  /*background-size: cover;*/
 }
 
 .new-recipe-btn {
