@@ -1,18 +1,21 @@
 <!-- ************ Recipe Editor Tabs and Save Button ************ -->
-<div class="navbar navbar-default">
-    <div class="container">
-      <ul class="nav navbar-nav" ng-repeat="tab in recipeEditor.tabs">
-        <li ng-class="{ active: tab === recipeEditor.viewTab }">
-          <a ng-click="recipeEditor.changeTab(tab)" href="#/recipeEditor">{{tab}}</a>
-        </li>
-      </ul>
-      <button class="btn btn-primary navbar-btn navbar-right"
-              ng-click="recipeEditor.saveRecipe()"
-              >Save Recipe
-      </button>
-    </div>
-  </div>
+<div class="container">
+  <div class="panel panel-default editorPanel">
+      <div class="panel-heading editorPanelHeading">
+        <ul class="nav nav-tabs editorNavbar">
+          <li ng-repeat="tab in recipeEditor.tabs" ng-class="{ active: tab === recipeEditor.viewTab }">
+            <a ng-click="recipeEditor.changeTab(tab)"
+               href="#/recipeEditor"
+               class="navbarText"><h3>{{tab}}</h3></a>
+          </li>
+        <button class="btn btn-primary navbar-btn navbar-right"
+                ng-click="recipeEditor.saveRecipe()"
+                >Save Recipe
+        </button>
+        </ul>
+      </div>
 
+<div class="panel-body">
 
 <!-- ************ Ingredients Table ************ -->
 <!-- displays the table with columns based on the tab selected -->
@@ -119,3 +122,6 @@
   <div ng-include="'/app/recipeEditor/nutrition.html'" ng-show="recipeEditor.viewTab === 'Nutrition'"></div>
 </div>
 
+    </div>
+  </div>
+</div>
