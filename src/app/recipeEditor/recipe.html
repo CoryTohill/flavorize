@@ -1,31 +1,101 @@
+<!-- ************ Recipe Title ************ -->
 <div class="col-sm-6 form-group">
-  <label for="recipeTitle">Recipe Title</label>
+  <label for="recipeTitle"><h2>Title</h2></label>
   <input class="form-control"
          type="text"
          id="recipeTitle"
          ng-model="recipeEditor.recipe.title">
 </div>
 
+<!-- ************ Author ************ -->
 <div class="col-sm-6 form-group">
-  <label for="recipeAuthor">Author</label>
+  <label for="recipeAuthor"><h2>Author</h2></label>
   <input class="form-control"
          type="text"
          id="recipeAuthor"
          ng-model="recipeEditor.recipe.author">
 </div>
 
-<div class="col-xs-12">
-  <label for="recipeImage">Recipe Image</label>
-  <div>
-    <img src="{{recipeEditor.recipe.photoURL}}">
+<!-- <div class="col-sm-12"> -->
+
+  <!-- ************ Image Upload ************ -->
+  <div class="col-sm-6">
+    <h2>Photo</h2>
+    <form ng-submit="recipeEditor.uploadImage()">
+      <label class="btn btn-default btn-file">
+        Select an Image
+        <input type="file"
+               accept="image/*"
+               style="display:none">
+      </label>
+      <input class="btn btn-primary"
+             type="submit"
+             value="Upload">
+    </form>
+    <label for="recipeImage">Current Image</label>
+    <div>
+      <img src="{{recipeEditor.recipe.photoURL}}" class="view-img">
+    </div>
   </div>
-  <form ng-submit="recipeEditor.uploadImage()">
-    <input type="file" accept="image/*">
-    <input class="btn btn-primary" type="submit" value="Upload">
-  </form>
+
+  <!-- ************ Ingredients Table ************ -->
+  <div class="col-sm-6">
+    <h2>Ingredients</h2>
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Ingredient</th>
+            <th>Amount</th>
+            <th>Additional Info</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="ingredient in recipeEditor.recipe.ingredients">
+            <td>{{ingredient.userIngredientName}}
+              <button class="btn btn-xs btn-danger"
+                      ng-click="recipeEditor.removeIngredient(ingredient)">Remove
+              </button>
+            </td>
+
+            <!-- ************ Recipe Columns ************ -->
+            <!-- Amount -->
+            <td class="form-group">
+              <input class="form-control"
+                     type="text"
+                     ng-model="ingredient.amount">
+            </td>
+
+            <!-- Additional Info -->
+            <td class="form-group">
+              <input class="form-control"
+                     type="text"
+                     ng-model="ingredient.additionalInfo">
+            </td>
+          </tr>
+
+          <!-- ************ Add Ingredient ************ -->
+          <tr>
+            <td>
+              <form class="form-group"
+                    ng-submit="recipeEditor.addIngredient(recipeEditor.userText)">
+                <input class="form-control"
+                       ng-model="recipeEditor.userText"
+                       type="text"
+                       placeholder="Add Ingredient">
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
-<div class="form-group">
+<!-- ************ Directions ************ -->
+<div class="form-group col-sm-12">
   <h2>Directions</h2>
   <textarea id="directions"
             class="form-control col-lg-1"

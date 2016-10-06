@@ -19,73 +19,52 @@
         </div>
         </div>
 
-
         <div class="col-sm-6">
           <h2>Directions</h2>
           <p>{{view.recipe.directions}}</p>
         </div>
 
+        <div class="col-sm-6" ng-show="view.recipe.calories">
+          <h2>Nutritional Information</h2>
+          <div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nutrient</th>
+                  <th>Per Recipe</th>
+                  <th ng-show="view.recipe.caloriesPerServing">Per Serving</th>
+                </tr>
+              </thead>
 
+              <tbody>
+                <tr>
+                  <td>Calories</td>
+                  <td>{{view.recipe.calories | number: 0}}</td>
+                  <td ng-show="view.recipe.caloriesPerServing">{{view.recipe.caloriesPerServing | number: 0}}</td>
+                </tr>
 
-      <div class="col-sm-6" ng-show="view.recipe.calories">
-        <h2>Nutritional Information</h2>
-        <div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Nutrient</th>
-                <th>Per Recipe</th>
-                <th ng-show="view.recipe.caloriesPerServing">Per Serving</th>
-              </tr>
-            </thead>
+                <tr>
+                  <td>Fat</td>
+                  <td>{{view.recipe.fat | number: 0}} g</td>
+                  <td ng-show="view.recipe.caloriesPerServing">{{view.recipe.fatPerServing | number: 0}} g</td>
+                </tr>
 
-            <tbody>
-              <tr>
-                <td>Calories</td>
-                <td>{{view.recipe.calories | number: 0}}</td>
-                <td ng-show="view.recipe.caloriesPerServing">{{view.recipe.caloriesPerServing | number: 0}}</td>
-              </tr>
+                <tr>
+                  <td>Carbohydrates</td>
+                  <td>{{view.recipe.carbs | number: 0}} g</td>
+                  <td ng-show="view.recipe.caloriesPerServing">{{view.recipe.carbsPerServing | number: 0}} g</td>
+                </tr>
 
-              <tr>
-                <td>Fat</td>
-                <td>{{view.recipe.fat | number: 0}} g</td>
-                <td ng-show="view.recipe.caloriesPerServing">{{view.recipe.fatPerServing | number: 0}} g</td>
-              </tr>
-
-              <tr>
-                <td>Carbohydrates</td>
-                <td>{{view.recipe.carbs | number: 0}} g</td>
-                <td ng-show="view.recipe.caloriesPerServing">{{view.recipe.carbsPerServing | number: 0}} g</td>
-              </tr>
-
-              <tr>
-                <td>Sugars</td>
-                <td>{{view.recipe.sugar | number: 0}} g</td>
-                <td ng-show="view.recipe.caloriesPerServing"  >{{view.recipe.sugarPerServing | number: 0}} g</td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <td>Sugars</td>
+                  <td>{{view.recipe.sugar | number: 0}} g</td>
+                  <td ng-show="view.recipe.caloriesPerServing"  >{{view.recipe.sugarPerServing | number: 0}} g</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-
-
-<!--     <h3>Nutritional Information:</h3>
-
-    <div class="col-sm-6">
-      <h4>Per Recipe:</h4>
-      <p>Calories: {{view.recipe.calories | number: 0}}</p>
-      <p>Fat: {{view.recipe.fat | number: 0}} g</p>
-      <p>Carbohydrates: {{view.recipe.carbs | number: 0}} g</p>
-      <p>Sugars: {{view.recipe.sugar | number: 0}} g</p>
-    </div>
-
-    <div class="col-sm-6" ng-show="view.recipe.caloriesPerServing">
-      <h4>Per Serving:</h4>
-      <p>Calories: {{view.recipe.caloriesPerServing | number: 0}}</p>
-      <p>Fat: {{view.recipe.fatPerServing | number: 0}} g</p>
-      <p>Carbohydrates: {{view.recipe.carbsPerServing | number: 0}} g</p>
-      <p>Sugars: {{view.recipe.sugarPerServing | number: 0}} g</p>
     </div>
   </div>
 </div>
- -->

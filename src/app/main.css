@@ -2,9 +2,7 @@
 
 html,
 .ngview {
-  /*background-color: #00bf94;*/
   background-image: url("light-wood.jpg");
-  background-size: cover;
 }
 
 
@@ -21,7 +19,6 @@ html,
   background-color: #6b4423;
 }
 
-
 .navbarText {
   color: #e0cda7;
 }
@@ -31,7 +28,6 @@ html,
   color: #e0cda7;
   font-size: 1.3em;
 }
-
 
 .navbar-nav li a:active,
 .navbar-nav li a:hover {
@@ -50,7 +46,6 @@ html,
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  /*border-color: #ac8f57;*/
   background-image: url("paper-tab.png");
   background-repeat: no-repeat;
   background-size: cover;
