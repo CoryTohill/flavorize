@@ -28,8 +28,6 @@
             <thead>
               <tr>
                 <th>Ingredient</th>
-                <th ng-show="recipeEditor.viewTab === 'Recipe'">Amount</th>
-                <th ng-show="recipeEditor.viewTab === 'Recipe'">Additional Info</th>
                 <th ng-show="recipeEditor.viewTab === 'Food Pairing'">Flavor Profile</th>
                 <th ng-show="recipeEditor.viewTab === 'Nutrition'">Nutrition Profile</th>
                 <th ng-show="recipeEditor.viewTab === 'Nutrition'">USDA Units</th>
@@ -41,23 +39,6 @@
               <tr ng-repeat="ingredient in recipeEditor.recipe.ingredients">
                 <td>{{ingredient.userIngredientName}}
                   <button class="btn btn-xs btn-danger" ng-click="recipeEditor.removeIngredient(ingredient)">Remove</button>
-                </td>
-
-                <!-- ************ Recipe Columns ************ -->
-                <!-- Amount -->
-                <td class="form-group"
-                    ng-show="recipeEditor.viewTab === 'Recipe'">
-                  <input class="form-control"
-                         type="text"
-                         ng-model="ingredient.amount">
-                </td>
-
-                <!-- Additional Info -->
-                <td class="form-group"
-                    ng-show="recipeEditor.viewTab === 'Recipe'">
-                  <input class="form-control"
-                         type="text"
-                         ng-model="ingredient.additionalInfo">
                 </td>
 
                 <!-- ************ Pairing Columns ************ -->
