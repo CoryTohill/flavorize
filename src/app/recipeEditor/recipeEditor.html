@@ -23,7 +23,7 @@
         <!-- ************ Ingredients Table ************ -->
         <!-- displays the table with columns based on the tab selected -->
         <div class="recipeEditor-container table-responsive" ng-hide="recipeEditor.viewTab === 'Recipe'">
-
+          <h2 class="editor-title">Ingredients</h2>
           <table class="table">
             <thead>
               <tr>
@@ -45,7 +45,7 @@
                 <!-- Flavor Profile -->
                 <td ng-show="recipeEditor.viewTab === 'Food Pairing'"
                     class="form-group">
-                  <select class="select-input form-control"
+                  <select class="form-control"
                           ng-change="recipeEditor.addFlavorProfile(ingredient, selected)"
                           ng-model="selected">
                     <option selected
@@ -61,7 +61,7 @@
                 <!-- Nutrition Profile -->
                 <td ng-show="recipeEditor.viewTab === 'Nutrition'"
                     class="form-group">
-                  <select class="select-input form-control"
+                  <select class="form-control"
                           ng-model="ingredient.ndbno"
                           ng-options="option.ndbno as option.name for option in ingredient.searchedUSDAIngredients"
                           ng-change="recipeEditor.getNutritionInfo(ingredient)">
