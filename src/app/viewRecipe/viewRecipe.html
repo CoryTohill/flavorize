@@ -1,5 +1,4 @@
 <div class="container view-container">
-
   <div class="col-sm-12">
     <div class="panel">
       <div class="panel-heading">
@@ -12,7 +11,7 @@
 
         <img src="{{view.recipe.photoURL}}" class="col-sm-6 view-img">
         <div class="col-sm-6">
-          <h2>Ingredients</h2>
+          <h2 class="title">Ingredients</h2>
           <div ng-repeat="ingredient in view.recipe.ingredients">
             <p>{{ingredient.amount}} {{ingredient.userIngredientName}} {{ingredient.additionalInfo}}</p>
           </div>
@@ -20,12 +19,12 @@
         </div>
 
         <div class="col-sm-6">
-          <h2>Directions</h2>
+          <h2 class="title">Directions</h2>
           <p>{{view.recipe.directions}}</p>
         </div>
 
         <div class="col-sm-6" ng-show="view.recipe.calories">
-          <h2>Nutritional Information</h2>
+          <h2 class="title">Nutritional Information</h2>
           <div>
             <table class="table">
               <thead>

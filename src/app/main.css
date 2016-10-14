@@ -86,6 +86,15 @@ html,
   margin-top: 15px;
 }
 
+.pairing-panel {
+  margin-top: 0;
+  border-color: #962517;
+}
+
+.pairing-heading {
+  background-color: #962517;
+  color: #e0cda7;
+}
 
 
 /************ Card Styles ************/
@@ -114,9 +123,7 @@ html,
   height: 350px;
 }
 
-.suggestion-image {
-  height: 202.5px;
-}
+
 
 .suggestion-button {
   position: absolute;
@@ -147,7 +154,7 @@ html,
   max-width: 100%;
 }
 
-.editor-title {
+.title {
   color: #3A5FB1;
 }
 
@@ -183,5 +190,9 @@ html,
   .card-image {
     max-height: 175px;
     margin-bottom: 10px;
+  }
+
+  .suggestion-image {
+    height: 202.5px;
   }
 }
