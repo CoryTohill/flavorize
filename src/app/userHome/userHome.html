@@ -1,19 +1,25 @@
-
 <div class="container">
-<button class="btn btn-lg btn-primary center-block new-recipe-btn"
-        ng-click="userHome.newRecipe()">New Recipe</button>
-  <div ng-repeat="recipe in userHome.userRecipes">
-    <div class="col-sm-4 col-md-3">
-      <div class="card">
-        <div ng-click="userHome.viewRecipe(recipe)">
+  <button class="btn btn-lg btn-primary center-block new-recipe-btn"
+          ng-click="userHome.newRecipe()">New Recipe</button>
+  <div ng-repeat="recipe in userHome.userRecipes"
+       class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
+    <div class="panel cardPanel">
+      <div class="panel-heading cardPanelHeading">
+        <h3>{{recipe.title}}</h3>
+        <p>By: {{recipe.author}}</p>
+      </div>
+      <div class="panel-body card-body">
+        <!-- Card Image -->
+        <div class="card-image-container">
           <img class="img-responsive card-image" src="{{recipe.photoURL}}">
-          <h3 class="card-title">{{recipe.title}}</h3>
-          <div class="card-author">
-            <h5>By: {{recipe.author}}</h5>
-          </div>
         </div>
-        <button class="edit-button btn btn-xs btn-primary" ng-click="userHome.editRecipe(recipe)">Edit</button>
-        <button class="delete-button btn btn-xs btn-warning" ng-click="userHome.deleteRecipe(recipe)">Delete</button>
+        <!-- Card Buttons -->
+        <button class="btn btn-primary card-button view-button pull-left"
+                ng-click="userHome.viewRecipe(recipe)">View</button>
+        <button class="btn btn-info card-button edit-button"
+                ng-click="userHome.editRecipe(recipe)">Edit</button>
+        <button class="btn btn-danger card-button delete-button pull-right"
+                ng-click="userHome.deleteRecipe(recipe)">Delete</button>
       </div>
     </div>
   </div>

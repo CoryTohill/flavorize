@@ -1,21 +1,25 @@
-<div class="form-group">
-  <label for="servings">Servings Per Recipe</label>
-  <input class="form-control number-input"
-         type="number"
-         name="servings"
-         ng-model="recipeEditor.recipe.servings"
-         ng-change="recipeEditor.updateNutritionValuesPerServing()">
-</div>
 
-<h2>Nutritional Information</h2>
 
-<div>
+
+<!-- <div class="col-sm-12"> -->
+  <h2 class="title">Nutritional Information</h2>
+
+  <div class="form-group col-sm-3">
+    <label for="servings">Servings Per Recipe</label>
+    <input class="form-control number-input"
+           type="number"
+           name="servings"
+           ng-model="recipeEditor.recipe.servings"
+           ng-change="recipeEditor.updateNutritionValuesPerServing()">
+  </div>
+  <div class="col-sm-6">
+
   <table class="table">
     <thead>
       <tr>
         <th>Nutrient</th>
         <th>Per Recipe</th>
-        <th ng-show="recipeEditor.recipe.servings">Per Serving</th>
+        <th>Per Serving</th>
       </tr>
     </thead>
 
@@ -45,4 +49,6 @@
       </tr>
     </tbody>
   </table>
+    </div>
+
 </div>
