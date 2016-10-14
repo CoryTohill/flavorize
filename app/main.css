@@ -1,0 +1,198 @@
+/************ General Site Styles ************/
+
+html,
+.ngview {
+  background-image: url("light-wood.jpg");
+}
+
+
+
+/************ Navbar Styles ************/
+
+.navbar {
+  margin: 0;
+  border-radius: 0;
+  border: none;
+}
+
+.mainNavbar {
+  background-color: #6b4423;
+}
+
+.navbarText {
+  color: #e0cda7;
+}
+
+.navbar-nav li a:focus {
+  background-color: #6b4423;
+  color: #e0cda7;
+  font-size: 1.3em;
+}
+
+.navbar-nav li a:active,
+.navbar-nav li a:hover {
+  background-color: #ac8f57;
+  color: #6b4423;
+}
+
+.editorNavbar {
+  background-color: #2a334f;
+}
+
+.editorPanelHeading {
+  padding: 0;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  background-image: url("paper-tab.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-bottom: none;
+  color: #2a334f;
+}
+
+
+/************ Panel Styles ************/
+
+.panel {
+  margin-top: 10vh;
+  border-color: #2a334f;
+  box-shadow: 20px 20px 20px;
+}
+
+.panel-heading {
+  background-color: #2a334f;
+  color: #e0cda7;
+}
+
+.panel-body {
+  background-image: url("paper-background-11.jpg");
+  background-size: cover;
+}
+
+.editorPanel,
+.cardPanel {
+  border-color: #2a334f;
+}
+
+.cardPanelHeading {
+  background-color: #2a334f;
+  color: #e0cda7;
+}
+
+.new-recipe-btn {
+  margin-top: 15px;
+}
+
+.pairing-panel {
+  margin-top: 0;
+  border-color: #962517;
+}
+
+.pairing-heading {
+  background-color: #962517;
+  color: #e0cda7;
+}
+
+
+/************ Card Styles ************/
+
+.card-image {
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card-body {
+  position: relative;
+  text-align: center;
+}
+
+.card-image-container {
+  min-height: 180px;
+}
+
+.card-button {
+  position: relative;
+}
+
+.suggestion-card {
+  text-align: center;
+  height: 350px;
+}
+
+
+
+.suggestion-button {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.enlarge {
+  transition: all .2s ease-in-out;
+}
+
+.enlarge:hover {
+  transform: scale(1.1);
+}
+
+/************ Inputs/Forms ************/
+
+.form-control {
+  max-width: 300px;
+}
+
+.number-input {
+  max-width: 100px;
+}
+
+#directions {
+  max-width: 100%;
+}
+
+.title {
+  color: #3A5FB1;
+}
+
+
+/************ Login Page ************/
+
+.login-input {
+  max-width: 100%;
+  margin: 20px 0;
+}
+
+.auth-btn {
+  display: inline;
+}
+
+
+
+/************ View Recipe Page ************/
+
+.view-img {
+  max-width: 100%;
+  max-height: 400px;
+  padding: 0;
+  margin-top:10px;
+  border-radius: 2em;
+}
+
+
+
+/************ Media Queries ************/
+
+@media only screen and (min-width: 768px) {
+  .card-image {
+    max-height: 175px;
+    margin-bottom: 10px;
+  }
+
+  .suggestion-image {
+    height: 202.5px;
+  }
+}

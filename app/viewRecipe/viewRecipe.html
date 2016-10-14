@@ -1,0 +1,69 @@
+<div class="container view-container">
+  <div class="col-sm-12">
+    <div class="panel">
+      <div class="panel-heading">
+        <h1>{{view.recipe.title}}
+          <div class="lead">By: {{view.recipe.author}}</div>
+        </h1>
+      </div>
+      <div class="panel-body">
+        <div class="col-sm-12">
+
+        <img src="{{view.recipe.photoURL}}" class="col-sm-6 view-img">
+        <div class="col-sm-6">
+          <h2 class="title">Ingredients</h2>
+          <div ng-repeat="ingredient in view.recipe.ingredients">
+            <p>{{ingredient.amount}} {{ingredient.userIngredientName}} {{ingredient.additionalInfo}}</p>
+          </div>
+        </div>
+        </div>
+
+        <div class="col-sm-6">
+          <h2 class="title">Directions</h2>
+          <p>{{view.recipe.directions}}</p>
+        </div>
+
+        <div class="col-sm-6" ng-show="view.recipe.calories">
+          <h2 class="title">Nutritional Information</h2>
+          <div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nutrient</th>
+                  <th>Per Recipe</th>
+                  <th ng-show="view.recipe.caloriesPerServing">Per Serving</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>Calories</td>
+                  <td>{{view.recipe.calories | number: 0}}</td>
+                  <td ng-show="view.recipe.caloriesPerServing">{{view.recipe.caloriesPerServing | number: 0}}</td>
+                </tr>
+
+                <tr>
+                  <td>Fat</td>
+                  <td>{{view.recipe.fat | number: 0}} g</td>
+                  <td ng-show="view.recipe.caloriesPerServing">{{view.recipe.fatPerServing | number: 0}} g</td>
+                </tr>
+
+                <tr>
+                  <td>Carbohydrates</td>
+                  <td>{{view.recipe.carbs | number: 0}} g</td>
+                  <td ng-show="view.recipe.caloriesPerServing">{{view.recipe.carbsPerServing | number: 0}} g</td>
+                </tr>
+
+                <tr>
+                  <td>Sugars</td>
+                  <td>{{view.recipe.sugar | number: 0}} g</td>
+                  <td ng-show="view.recipe.caloriesPerServing"  >{{view.recipe.sugarPerServing | number: 0}} g</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

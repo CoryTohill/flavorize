@@ -1,0 +1,18 @@
+<h2 class="title">Pairings</h2>
+<div ng-repeat="suggestion in recipeEditor.pairings"
+     ng-cloak="{{suggestion._links.ingredient._links.image.size_240}}">
+  <div class="col-sm-4 col-md-3"
+       ng-click="recipeEditor.addIngredient(suggestion._links.ingredient.name)">
+    <div class="panel pairing-panel enlarge"
+         title="Click to Add Ingredient">
+      <div class="panel-heading pairing-heading">
+        <h4>{{suggestion._links.ingredient.name}}</h4>
+      </div>
+      <div class="panel-body">
+        <img class="img-responsive card-image suggestion-image"
+             src="{{suggestion._links.ingredient._links.image.size_240}}"
+             alt="{{suggestion._links.ingredient.name}}">
+      </div>
+    </div>
+  </div>
+</div>
