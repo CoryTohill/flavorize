@@ -160,7 +160,7 @@ html,
 }
 
 .auth-btn {
-  width: 100%;
+  display: inline;
 }
 
 
