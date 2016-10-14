@@ -58,12 +58,13 @@ html,
 
 .panel {
   margin-top: 10vh;
-  border-color: #B73E18;
+  border-color: #2a334f;
   box-shadow: 20px 20px 20px;
 }
 
 .panel-heading {
-  background-color: #B73E18;
+  background-color: #2a334f;
+  color: #e0cda7;
 }
 
 .panel-body {
@@ -90,10 +91,9 @@ html,
 /************ Card Styles ************/
 
 .card-image {
-  border-radius: 5px 5px 0 0;
+  border-radius: 5px;
   width: 100%;
   box-sizing: border-box;
-  padding-bottom: 10px;
 }
 
 .card-body {
@@ -110,11 +110,8 @@ html,
 }
 
 .suggestion-card {
-  height: 350px;
-}
-
-.suggestion-card {
   text-align: center;
+  height: 350px;
 }
 
 .suggestion-image {
@@ -128,7 +125,13 @@ html,
   transform: translate(-50%, -50%);
 }
 
+.enlarge {
+  transition: all .2s ease-in-out;
+}
 
+.enlarge:hover {
+  transform: scale(1.1);
+}
 
 /************ Inputs/Forms ************/
 
@@ -170,4 +173,15 @@ html,
   padding: 0;
   margin-top:10px;
   border-radius: 2em;
+}
+
+
+
+/************ Media Queries ************/
+
+@media only screen and (min-width: 768px) {
+  .card-image {
+    max-height: 175px;
+    margin-bottom: 10px;
+  }
 }
